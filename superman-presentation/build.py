@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """בונה את מצגת "סופרמן" – הערכה חלופית בספרות, שכבה ט'.
-הרצה:  python3 build.py [night|paper|doc]   (ברירת מחדל: night)
+הרצה:  python3 build.py [night|paper|doc]   (ברירת מחדל: olive)
 """
 import math, os, random, sys
 from PIL import Image, ImageDraw, ImageFilter, ImageEnhance, ImageChops, ImageOps
@@ -64,6 +64,8 @@ def make_bg(style, name, light, photo=None):
     img = Image.new("RGB", (PW, PH), st["bg"])
     if photo:
         img = _photo_layer(img, photo, 0.62 if style != "doc" else 0.5, 14, st["gray_photos"])
+        if style == "olive":  # טונים של זית וחול, תואם לפלטה
+            img = ImageOps.colorize(ImageOps.grayscale(img), black=(20, 23, 17), white=(236, 222, 186), mid=(96, 98, 74))
     if st["kind"] == "glow":
         glow = Image.new("RGB", (PW, PH), (0, 0, 0))
         g = ImageDraw.Draw(glow)
@@ -383,11 +385,11 @@ def build(style="night"):
     D.text(s, M, 1.55, W - 2 * M, 4.2, [
         P(R("סופרמן בקומיקס אף פעם לא נפצע.", 40, D.TEXT, True), align="ctr", space_after=16, line=1.05),
         P(R("עידן עמדי נפצע, נשבר וקם.", 44, D.ACC, False, D.F_DISPLAY), align="ctr", space_after=16, line=1.05),
-        P(R("בעינינו, זה סופרמן אמיתי.", 40, D.TEXT, False, D.F_LIGHT), align="ctr", line=1.05),
+        P(R("בעינינו, זה סופרמן אמיתי", 40, D.TEXT, False, D.F_LIGHT), align="ctr", line=1.05),
     ], anchor="m", name="Title")
     D.pageno(s, 10)
 
-    suffix = "" if style == "night" else f"_{style}"
+    suffix = "" if style == "olive" else f"_{style}"
     out = os.path.join(HERE, f"superman{suffix}.pptx")
     prs.save(out)
     print("saved", out)
@@ -395,4 +397,4 @@ def build(style="night"):
 
 
 if __name__ == "__main__":
-    build(sys.argv[1] if len(sys.argv) > 1 else "night")
+    build(sys.argv[1] if len(sys.argv) > 1 else "olive")
