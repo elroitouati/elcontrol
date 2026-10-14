@@ -16,15 +16,26 @@ W, H = 13.333, 7.5
 M = 0.7  # שוליים
 
 STYLES = {
-    # קולנועי: כחול-לילה, אור זהוב שמתחזק לאורך המצגת
-    "night": dict(bg=(22, 29, 45), text="F4F0E8", muted="B6BDCC", accent="DDB46A", hair="47506A",
-                  title="Heebo", display="Heebo Black", body="Heebo", light="Heebo Light", gray_photos=False),
-    # ספר שירה: דף לבן, אות עברית קלאסית, אדום-גלימה
-    "paper": dict(bg=(246, 245, 242), text="1C1C20", muted="5E616A", accent="9E3328", hair="CFCAC0",
-                  title="Frank Ruhl Libre Black", display="Frank Ruhl Libre Black", body="Heebo", light="Frank Ruhl Libre", gray_photos=True),
-    # דוקומנטרי: שחור-לבן, טיפוגרפיה גדולה, נגיעה אחת של אדום
-    "doc": dict(bg=(14, 14, 15), text="F2F2F0", muted="A2A2A2", accent="D0503F", hair="3C3C3C",
-                title="Heebo Black", display="Heebo Black", body="Heebo", light="Heebo Light", gray_photos=True),
+    # 1. לילה זהוב: כחול-לילה, אור זהוב שמתחזק לאורך המצגת
+    "night": dict(name="לילה זהוב", bg=(22, 29, 45), kind="glow", tint=(215, 168, 100), text="F4F0E8", muted="B6BDCC",
+                  accent="DDB46A", hair="47506A", title="Bellefair", display="Bellefair", body="Assistant Light",
+                  strong="Assistant SemiBold", light="Bellefair", gray_photos=False),
+    # 2. ספר שירה: דף לבן, אות עברית קלאסית, אדום-גלימה
+    "paper": dict(name="ספר שירה", bg=(246, 245, 242), kind="paper", text="1C1C20", muted="5E616A", accent="9E3328",
+                  hair="CFCAC0", title="Frank Ruhl Libre Light", display="Frank Ruhl Libre Light", body="Assistant Light",
+                  strong="Assistant SemiBold", light="Frank Ruhl Libre Light", gray_photos=True),
+    # 3. דוקומנטרי: שחור-לבן, אותיות דקות וגדולות, נגיעה אחת של אדום
+    "doc": dict(name="דוקומנטרי", bg=(14, 14, 15), kind="glow", tint=(150, 150, 150), text="F2F2F0", muted="A2A2A2",
+                accent="D0503F", hair="3C3C3C", title="IBM Plex Sans Hebrew ExtraLight", display="IBM Plex Sans Hebrew ExtraLight",
+                body="IBM Plex Sans Hebrew Light", strong="IBM Plex Sans Hebrew", light="IBM Plex Sans Hebrew ExtraLight", gray_photos=True),
+    # 4. זית וחול: ירוק-זית עמוק (מדים, אדמה) עם אור חולי
+    "olive": dict(name="זית וחול", bg=(36, 41, 31), kind="glow", tint=(200, 180, 130), text="F1EDE2", muted="BDB8A6",
+                  accent="D9C391", hair="545A47", title="Rubik Light", display="Rubik Light", body="Rubik Light",
+                  strong="Rubik", light="Rubik Light", gray_photos=False),
+    # 5. מחברת אישית: דף לבן, כותרות בכתב יד, דיו כחולה
+    "journal": dict(name="מחברת אישית", bg=(250, 250, 248), kind="paper", text="22252B", muted="646A75", accent="2C4F86",
+                    hair="D5D8DE", title="Solitreo", display="Solitreo", body="Assistant Light",
+                    strong="Assistant SemiBold", light="Assistant Light", quote="Assistant Light", gray_photos=False),
 }
 
 
@@ -52,13 +63,13 @@ def make_bg(style, name, light, photo=None):
     PW, PH = 1920, 1080
     img = Image.new("RGB", (PW, PH), st["bg"])
     if photo:
-        img = _photo_layer(img, photo, 0.62 if style == "night" else 0.5, 14, st["gray_photos"])
-    if style in ("night", "doc"):
+        img = _photo_layer(img, photo, 0.62 if style != "doc" else 0.5, 14, st["gray_photos"])
+    if st["kind"] == "glow":
         glow = Image.new("RGB", (PW, PH), (0, 0, 0))
         g = ImageDraw.Draw(glow)
         cx, cy = PW + 80, -160
-        tint = (215, 168, 100) if style == "night" else (200, 200, 200)
-        amt = light if style == "night" else light * 0.45
+        tint = st["tint"]
+        amt = light * (0.45 if style == "doc" else 1.0)
         for r in range(1600, 0, -12):
             t = 1 - r / 1600
             k = (t ** 2.2) * amt
@@ -68,7 +79,7 @@ def make_bg(style, name, light, photo=None):
         ImageDraw.Draw(beam).polygon([(PW, -40), (PW - 260, -40), (PW * 0.2, PH + 40), (PW * 0.5, PH + 40)],
                                      fill=int(30 * amt + 6))
         beam = beam.filter(ImageFilter.GaussianBlur(100))
-        mul = (0.85, 0.68, 0.45) if style == "night" else (0.7, 0.7, 0.7)
+        mul = tuple(c / 255 for c in tint)
         img = ImageChops.add(img, Image.merge("RGB", [beam.point(lambda v, m=m: int(v * m)) for m in mul]))
         img = _grain(img, 0.05)
     else:
@@ -102,9 +113,13 @@ class Deck:
         s = STYLES[style]
         self.TEXT, self.MUTED, self.ACC, self.HAIR = (RGBColor.from_string(s[k]) for k in ("text", "muted", "accent", "hair"))
         self.F_TITLE, self.F_DISPLAY, self.F_BODY, self.F_LIGHT = s["title"], s["display"], s["body"], s["light"]
+        self.F_STRONG = s["strong"]
+        self.F_QUOTE = s.get("quote", s["display"])
 
     def R(self, text, size=22, color=None, bold=False, font=None):
-        return (text, dict(size=size, color=color or self.TEXT, bold=bold, font=font or self.F_BODY))
+        if bold and font is None:
+            font = self.F_STRONG
+        return (text, dict(size=size, color=color or self.TEXT, bold=False, font=font or self.F_BODY))
 
     @staticmethod
     def P(*runs, align="r", space_after=None, line=None, ltr=False):
@@ -223,7 +238,7 @@ def build(style="night"):
 
     def new(i, photo=None):
         s = prs.slides.add_slide(blank)
-        set_bg(s, make_bg(style, f"bg{i:02d}", levels[i], None if style == "paper" else photo))
+        set_bg(s, make_bg(style, f"bg{i:02d}", levels[i], None if STYLES[style]["kind"] == "paper" else photo))
         add_fade(s)
         return s
 
@@ -240,10 +255,10 @@ def build(style="night"):
     D.title(s, "הקטע שבחרנו")
     D.text(s, 7.3, 1.55, 5.33, 1.3, [P(R("״", 120, D.ACC, False, D.F_DISPLAY), line=0.8)], name="Quote mark")
     D.text(s, 7.3, 2.65, 5.33, 3.0, [
-        P(R("אך בסתר ליבי ", 30, D.TEXT, True), R("השבור השלם", 30, D.ACC, True), space_after=4, line=1.05),
-        P(R("לא היו לי ספקות", 30, D.TEXT, True), space_after=20, line=1.05),
-        P(R("כבר לא מפחיד אותי ", 30, D.TEXT, True), R("למות", 30, D.ACC, True), space_after=4, line=1.05),
-        P(R("יותר מפחיד לא ", 30, D.TEXT, True), R("לחיות", 30, D.ACC, True), line=1.05),
+        P(R("אך בסתר ליבי ", 30, D.TEXT, False, D.F_QUOTE), R("השבור השלם", 30, D.ACC, False, D.F_QUOTE), space_after=4, line=1.05),
+        P(R("לא היו לי ספקות", 30, D.TEXT, False, D.F_QUOTE), space_after=20, line=1.05),
+        P(R("כבר לא מפחיד אותי ", 30, D.TEXT, False, D.F_QUOTE), R("למות", 30, D.ACC, False, D.F_QUOTE), space_after=4, line=1.05),
+        P(R("יותר מפחיד לא ", 30, D.TEXT, False, D.F_QUOTE), R("לחיות", 30, D.ACC, False, D.F_QUOTE), line=1.05),
     ])
     D.text(s, 7.3, 5.75, 5.33, 0.4, [P(R("עידן עמדי, ״סופרמן״", 16, D.MUTED))])
     D.text(s, M, 1.8, 6.0, 2.3, [
@@ -299,14 +314,14 @@ def build(style="night"):
     concepts = [
         dict(label="מושג ראשון", name="מטאפורה",
              definition="חיבור בין שני דברים מעולמות שונים, בלי מילת דימוי כמו ״כמו״ או ״כְּ״, כדי ליצור משמעות חדשה.",
-             quote=[[R("שראתה בתוכי כוח על", 32, D.TEXT, True)],
-                    [R("שהוא גם ", 32, D.TEXT, True), R("קביים", 32, D.ACC, True), R(" גם ", 32, D.TEXT, True), R("כנפיים", 32, D.ACC, True)]],
+             quote=[[R("שראתה בתוכי כוח על", 32, D.TEXT, False, D.F_QUOTE)],
+                    [R("שהוא גם ", 32, D.TEXT, False, D.F_QUOTE), R("קביים", 32, D.ACC, False, D.F_QUOTE), R(" גם ", 32, D.TEXT, False, D.F_QUOTE), R("כנפיים", 32, D.ACC, False, D.F_QUOTE)]],
              how="הכוח שאשתו ראתה בו הוא גם ״קביים״, משהו שתומך במי שנפצע ולא מסוגל ללכת לבד, וגם ״כנפיים״, משהו שמרים אותו למעלה.",
              why="השיקום הוא לא רק לחזור ללכת, הוא גם לחזור לחלום. האהבה נתנה לו את שני הדברים."),
         dict(label="מושג שני", name="ניגוד",
              definition="העמדה של שני דברים הפוכים זה מול זה, כדי לחדד את ההבדל ביניהם ולהבליט רעיון.",
-             quote=[[R("שרק מי שצעד ב", 32, D.TEXT, True), R("אפלה", 32, D.ACC, True), R(" וב", 32, D.TEXT, True), R("חושך", 32, D.ACC, True)],
-                    [R("יודע באמת מהו ", 32, D.TEXT, True), R("אור", 32, D.ACC, True)]],
+             quote=[[R("שרק מי שצעד ב", 32, D.TEXT, False, D.F_QUOTE), R("אפלה", 32, D.ACC, False, D.F_QUOTE), R(" וב", 32, D.TEXT, False, D.F_QUOTE), R("חושך", 32, D.ACC, False, D.F_QUOTE)],
+                    [R("יודע באמת מהו ", 32, D.TEXT, False, D.F_QUOTE), R("אור", 32, D.ACC, False, D.F_QUOTE)]],
              how="החושך הוא הפציעה והלילות הקשים, והאור הוא החזרה לחיים. אותו ניגוד חוזר בפזמון: ״למות״ מול ״לחיות״.",
              why="את הטוב מעריכים באמת רק אחרי שעוברים את הרע. כך בנוי כל השיר: הוא עובר מהשבר אל האור."),
     ]
