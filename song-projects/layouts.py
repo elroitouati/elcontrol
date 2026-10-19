@@ -88,6 +88,8 @@ class Builder:
         v = st["v"]["cover"]
         size = st.get("cover_size", 120)
         who = s.get("names")
+        if isinstance(who, list) and v != "poster":
+            who = " ו".join(who)
         names = self.P(self.R(who, 22, K.TEXT, "strong") if who else self.R("שמות המגישים", 20, K.MUTED, "body"))
         label = "הערכה חלופית בספרות · שכבה ט׳"
         if v == "center":
@@ -128,8 +130,12 @@ class Builder:
             K.text(sl, M, 5.75, 5.0, 0.5, [self.P(self.R(s.get("names") or "שמות המגישים", 20, K.TEXT if s.get("names") else K.MUTED, "strong" if s.get("names") else "body"), align="l")])
         elif v == "poster":
             sl = self.new(0.0)
-            K.text(sl, M, 0.6, 7.5, 0.5, [self.P(self.R(label, 18, K.TEXT, "label"))], name="Label")
-            K.text(sl, M, 0.6, 5.0, 0.5, [self.P(self.R(s.get("names") or "שמות המגישים", 20, K.TEXT if s.get("names") else K.MUTED, "strong" if s.get("names") else "body"), align="l")])
+            K.text(sl, M, 0.6, W - 2 * M, 0.5, [self.P(self.R(label, 18, K.TEXT, "label"))], name="Label")
+            who_lines = who if isinstance(who, list) else ([who] if who else None)
+            if who_lines:
+                K.text(sl, M, 0.55, 6.2, 0.4 * len(who_lines), [self.P(self.R(l, 16, K.TEXT, "strong"), align="l", line=1.05) for l in who_lines], name="Names")
+            else:
+                K.text(sl, M, 0.6, 5.0, 0.5, [self.P(self.R("שמות המגישים", 20, K.MUTED, "body"), align="l")])
             K.text(sl, M, 1.3, W - 2 * M, 0.8, [self.P(self.R(s["artist"], 34, K.ACC, "light"))])
             K.text(sl, M - 0.1, 2.0, W - 2 * M + 0.2, 4.6, [self.P(self.R(s["title"], size, K.TEXT, "display", bold=st.get("display_bold", False)), line=0.8)],
                    anchor="b", name="Title")
@@ -236,14 +242,60 @@ class Builder:
     # =========================== מילות השיר ===========================
     def lyrics(self):
         s, st, K = self.s, self.st, self.K
-        sl = self.new(0.3)
-        self.title(sl, "מילות השיר")
-        K.rect(sl, M, 1.6, W - 2 * M, 4.85, line=K.HAIR, line_w=1.25, dash=True, name="Lyrics placeholder")
-        K.text(sl, M, 1.6, W - 2 * M, 4.85, [
-            self.P(self.R("כאן יודבקו מילות השיר המלאות", 26, K.MUTED, "light"), align="ctr", after=8),
-            self.P(self.R("לפי חלוקת הבתים והשורות המקורית", 18, K.MUTED, "body"), align="ctr")], anchor="m", name="Lyrics")
-        K.text(sl, M, 6.6, W - 2 * M, 0.35, [self.P(self.R(s["credits"], 14, K.MUTED, "body"))], anchor="m")
-        self.pageno(sl)
+        stanzas = s.get("lyrics")
+        if not stanzas:
+            sl = self.new(0.3)
+            self.title(sl, "מילות השיר")
+            K.rect(sl, M, 1.6, W - 2 * M, 4.85, line=K.HAIR, line_w=1.25, dash=True, name="Lyrics placeholder")
+            K.text(sl, M, 1.6, W - 2 * M, 4.85, [
+                self.P(self.R("כאן יודבקו מילות השיר המלאות", 26, K.MUTED, "light"), align="ctr", after=8),
+                self.P(self.R("לפי חלוקת הבתים והשורות המקורית", 18, K.MUTED, "body"), align="ctr")], anchor="m", name="Lyrics")
+            K.text(sl, M, 6.6, W - 2 * M, 0.35, [self.P(self.R(s["credits"], 14, K.MUTED, "body"))], anchor="m")
+            self.pageno(sl)
+            return
+        size = st.get("lyrics_size", 20)
+        wrap_at = st.get("lyrics_wrap", 36)
+        cap = 15.5  # שורות לעמודה
+        from collections import Counter
+        seen = Counter()
+        for stz in stanzas:
+            for ln in set(stz):
+                seen[ln] += 1
+        chorus = {ln for ln, c in seen.items() if c >= 2}
+        cost = lambda ln: 2 if len(ln) > wrap_at else 1
+        cols, cur, used = [], [], 0.0
+        for stz in stanzas:
+            need = sum(cost(l) for l in stz)
+            if cur and used + 0.6 + need > cap:
+                cols.append(cur); cur, used = [], 0.0
+            if need > cap:  # בית ארוך מעמודה: מפצלים
+                part, pu = [], 0
+                for l in stz:
+                    if part and pu + cost(l) > cap:
+                        cur.append(part); cols.append(cur); cur, used, part, pu = [], 0.0, [], 0
+                    part.append(l); pu += cost(l)
+                cur.append(part); used = pu
+                continue
+            cur.append(stz); used += (0.6 if len(cur) > 1 else 0) + need
+        if cur:
+            cols.append(cur)
+        pages = [cols[i:i + 2] for i in range(0, len(cols), 2)]
+        for pi, pcols in enumerate(pages):
+            sl = self.new(0.3 + 0.03 * pi)
+            self.title(sl, "מילות השיר" if pi == 0 else "מילות השיר (המשך)")
+            colw = (W - 2 * M - 0.7) / 2
+            for ci, col in enumerate(pcols):
+                x = W - M - colw - ci * (colw + 0.7)
+                paras = []
+                for si, stz in enumerate(col):
+                    for li, ln in enumerate(stz):
+                        ch = ln in chorus
+                        paras.append(self.P(self.R(ln, size, K.ACC if ch else K.TEXT, "quote"), line=1.0,
+                                            after=10 if (li == len(stz) - 1 and si < len(col) - 1) else 0))
+                K.text(sl, x, 1.6, colw, 5.1, paras, name=f"Lyrics column {ci + 1}")
+            if pi == len(pages) - 1:
+                K.text(sl, M, 6.72, W - 2 * M, 0.3, [self.P(self.R(s["credits"], 12, K.MUTED, "body"))], anchor="m")
+            self.pageno(sl)
 
     # =========================== מושגים ===========================
     def concept(self, i):

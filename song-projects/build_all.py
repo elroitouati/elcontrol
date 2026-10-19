@@ -33,13 +33,19 @@ def render(folder, name, dpi=80):
 
 if __name__ == "__main__":
     want = sys.argv[1:]
+    LYR = {}
+    if os.environ.get("LYRICS_DIR"):
+        sys.path.insert(0, os.environ["LYRICS_DIR"])
+        from lyrics_data import LYRICS as LYR
+    OUT = os.environ.get("OUT_DIR")
     for song in SONGS:
         if want and not any(song["id"].startswith(w) for w in want):
             continue
-        folder = os.path.join(HERE, song["id"])
+        folder = os.path.join(OUT or HERE, song["id"])
         os.makedirs(folder, exist_ok=True)
         out = os.path.join(folder, song["id"] + ".pptx")
-        song = dict(song, names=NAMES.get(song["id"][:2]))
+        song = dict(song, names=None if os.environ.get("PUBLIC") else NAMES.get(song["id"][:2]),
+                    lyrics=LYR.get(song["id"][:2]))
         if song["id"][:2] in SINGULAR:
             song.update(SINGULAR[song["id"][:2]], singular=True)
         Builder(song, STYLES[song["style"]]).build(out)
