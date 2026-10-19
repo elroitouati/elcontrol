@@ -140,14 +140,16 @@ class Builder:
         s, st, K = self.s, self.st, self.K
         v = st["v"]["part_a"]
         qsize = st.get("quote_size", 28)
-        why = [self.P(self.R("למה בחרנו בקטע", 22, K.ACC, "strong"), after=4),
+        one = s.get("singular")
+        picked = "הקטע שבחרתי" if one else "הקטע שבחרנו"
+        why = [self.P(self.R("למה בחרתי בקטע" if one else "למה בחרנו בקטע", 22, K.ACC, "strong"), after=4),
                self.P(self.R(s["why"], 22), line=1.08)]
-        pers = [self.P(self.R("החיבור האישי שלנו", 22, K.ACC, "strong"), after=4),
+        pers = [self.P(self.R("החיבור האישי שלי" if one else "החיבור האישי שלנו", 22, K.ACC, "strong"), after=4),
                 self.P(self.R(s["personal"], 22), line=1.08)]
         src = f"״{s['title']}״, {s['artist_short']}"
         if v == "quote-right":
             sl = self.new(0.1)
-            self.title(sl, "הקטע שבחרנו")
+            self.title(sl, picked)
             K.text(sl, 7.25, 1.55, W - M - 7.25, 1.0, [self.P(self.R("״", 96, K.ACC, "display"), line=0.8)])
             K.text(sl, 7.25, 2.45, W - M - 7.25, 3.4, self.excerpt_paras(s["excerpt"], s["excerpt_hl"], qsize), anchor="t")
             K.text(sl, 7.25, 6.2, W - M - 7.25, 0.4, [self.P(self.R(src, 16, K.MUTED, "body"))])
@@ -155,7 +157,7 @@ class Builder:
             K.text(sl, M, 4.3, 6.0, 2.6, pers)
         elif v == "quote-top":
             sl = self.new(0.1)
-            self.title(sl, "הקטע שבחרנו")
+            self.title(sl, picked)
             n = len(s["excerpt"])
             K.text(sl, M, 1.55, W - 2 * M, 0.55 * n, self.excerpt_paras(s["excerpt"], s["excerpt_hl"], qsize, line=1.0), anchor="t")
             K.text(sl, M, 1.55, 4.5, 0.4, [self.P(self.R(src, 16, K.MUTED, "body"), align="l")])
@@ -169,7 +171,7 @@ class Builder:
             K.rect(sl, 0, 0, pw, H, fill=rgb(st["panel"]), name="Quote panel")
             ptxt = rgb(st.get("panel_text", st["text"]))
             phl = rgb(st.get("panel_hl", st["accent"]))
-            K.text(sl, 0.6, 0.75, pw - 1.2, 0.5, [self.P(self.R("הקטע שבחרנו", 18, ptxt, "label"))])
+            K.text(sl, 0.6, 0.75, pw - 1.2, 0.5, [self.P(self.R(picked, 18, ptxt, "label"))])
             K.text(sl, 0.6, 1.4, pw - 1.2, 4.6, self.excerpt_paras(s["excerpt"], s["excerpt_hl"], st.get("panel_quote_size", qsize - 4), ptxt, phl), anchor="m")
             K.text(sl, 0.6, 6.4, pw - 1.2, 0.4, [self.P(self.R(src, 16, ptxt, "body"))])
             x0 = pw + 0.7
