@@ -41,8 +41,9 @@ dd.ex{font-family:var(--display); font-size:18px}
 .note{font-size:14px; color:var(--muted)}
 .shots{margin:0; display:grid; gap:10px; min-width:0}
 .cover{width:100%; height:auto; aspect-ratio:16/9; object-fit:cover; display:block; border:1px solid var(--line); box-shadow:0 10px 30px -18px rgba(0,0,0,.45)}
-figcaption{display:flex; align-items:center; gap:12px; color:var(--muted); font-size:14px}
-.inside{width:42%; max-width:100%; height:auto; aspect-ratio:16/9; display:block; border:1px solid var(--line)}
+figcaption{display:flex; gap:12px}
+.cap{margin:0; color:var(--muted); font-size:14px}
+.inside{width:calc(50% - 6px); min-width:0; max-width:100%; height:auto; aspect-ratio:16/9; display:block; border:1px solid var(--line)}
 footer{padding-top:28px; color:var(--muted); font-size:14px; max-width:70ch}
 @media (max-width:820px){.proj{grid-template-columns:minmax(0,1fr); gap:18px}.shots{order:-1}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
@@ -77,7 +78,7 @@ footer{padding-top:28px; color:var(--muted); font-size:14px; max-width:70ch}
   </div>
   <figure class="shots">
     <img class="cover" src="images/01-cover.jpg" alt="שקף השער של פרויקט 01, מולדת" loading="lazy" width="1100" height="619">
-    <figcaption><img class="inside" src="images/01-inside.jpg" alt="שקף הקטע שבחרנו בפרויקט 01" loading="lazy" width="720" height="405"><span>מבפנים: שקף ״הקטע שבחרנו״</span></figcaption>
+    <figcaption><img class="inside" src="images/01-artist.jpg" alt="שקף האמן בפרויקט 01" loading="lazy" width="720" height="405"><img class="inside" src="images/01-inside.jpg" alt="שקף הקטע שבחרנו בפרויקט 01" loading="lazy" width="720" height="405"></figcaption><p class="cap">מבפנים: שקף האמן ושקף ״הקטע שבחרנו״</p>
   </figure>
 </article>
 
@@ -99,7 +100,7 @@ footer{padding-top:28px; color:var(--muted); font-size:14px; max-width:70ch}
   </div>
   <figure class="shots">
     <img class="cover" src="images/02-cover.jpg" alt="שקף השער של פרויקט 02, זריחה שחורה" loading="lazy" width="1100" height="619">
-    <figcaption><img class="inside" src="images/02-inside.jpg" alt="שקף הקטע שבחרנו בפרויקט 02" loading="lazy" width="720" height="405"><span>מבפנים: שקף ״הקטע שבחרנו״</span></figcaption>
+    <figcaption><img class="inside" src="images/02-artist.jpg" alt="שקף האמן בפרויקט 02" loading="lazy" width="720" height="405"><img class="inside" src="images/02-inside.jpg" alt="שקף הקטע שבחרנו בפרויקט 02" loading="lazy" width="720" height="405"></figcaption><p class="cap">מבפנים: שקף האמן ושקף ״הקטע שבחרנו״</p>
   </figure>
 </article>
 
@@ -121,7 +122,7 @@ footer{padding-top:28px; color:var(--muted); font-size:14px; max-width:70ch}
   </div>
   <figure class="shots">
     <img class="cover" src="images/03-cover.jpg" alt="שקף השער של פרויקט 03, חלל" loading="lazy" width="1100" height="619">
-    <figcaption><img class="inside" src="images/03-inside.jpg" alt="שקף הקטע שבחרנו בפרויקט 03" loading="lazy" width="720" height="405"><span>מבפנים: שקף ״הקטע שבחרנו״</span></figcaption>
+    <figcaption><img class="inside" src="images/03-artist.jpg" alt="שקף האמן בפרויקט 03" loading="lazy" width="720" height="405"><img class="inside" src="images/03-inside.jpg" alt="שקף הקטע שבחרנו בפרויקט 03" loading="lazy" width="720" height="405"></figcaption><p class="cap">מבפנים: שקף האמן ושקף ״הקטע שבחרנו״</p>
   </figure>
 </article>
 
@@ -143,7 +144,7 @@ footer{padding-top:28px; color:var(--muted); font-size:14px; max-width:70ch}
   </div>
   <figure class="shots">
     <img class="cover" src="images/04-cover.jpg" alt="שקף השער של פרויקט 04, בשדה מאחורי ביתי" loading="lazy" width="1100" height="619">
-    <figcaption><img class="inside" src="images/04-inside.jpg" alt="שקף הקטע שבחרנו בפרויקט 04" loading="lazy" width="720" height="405"><span>מבפנים: שקף ״הקטע שבחרנו״</span></figcaption>
+    <figcaption><img class="inside" src="images/04-artist.jpg" alt="שקף האמן בפרויקט 04" loading="lazy" width="720" height="405"><img class="inside" src="images/04-inside.jpg" alt="שקף הקטע שבחרנו בפרויקט 04" loading="lazy" width="720" height="405"></figcaption><p class="cap">מבפנים: שקף האמן ושקף ״הקטע שבחרנו״</p>
   </figure>
 </article>
 
@@ -165,7 +166,7 @@ footer{padding-top:28px; color:var(--muted); font-size:14px; max-width:70ch}
   </div>
   <figure class="shots">
     <img class="cover" src="images/05-cover.jpg" alt="שקף השער של פרויקט 05, פורחים לשובם" loading="lazy" width="1100" height="619">
-    <figcaption><img class="inside" src="images/05-inside.jpg" alt="שקף הקטע שבחרנו בפרויקט 05" loading="lazy" width="720" height="405"><span>מבפנים: שקף ״הקטע שבחרנו״</span></figcaption>
+    <figcaption><img class="inside" src="images/05-artist.jpg" alt="שקף האמן בפרויקט 05" loading="lazy" width="720" height="405"><img class="inside" src="images/05-inside.jpg" alt="שקף הקטע שבחרנו בפרויקט 05" loading="lazy" width="720" height="405"></figcaption><p class="cap">מבפנים: שקף האמן ושקף ״הקטע שבחרנו״</p>
   </figure>
 </article>
 
@@ -187,7 +188,7 @@ footer{padding-top:28px; color:var(--muted); font-size:14px; max-width:70ch}
   </div>
   <figure class="shots">
     <img class="cover" src="images/06-cover.jpg" alt="שקף השער של פרויקט 06, ילדה קטנה כותבת מכתב" loading="lazy" width="1100" height="619">
-    <figcaption><img class="inside" src="images/06-inside.jpg" alt="שקף הקטע שבחרנו בפרויקט 06" loading="lazy" width="720" height="405"><span>מבפנים: שקף ״הקטע שבחרנו״</span></figcaption>
+    <figcaption><img class="inside" src="images/06-artist.jpg" alt="שקף האמן בפרויקט 06" loading="lazy" width="720" height="405"><img class="inside" src="images/06-inside.jpg" alt="שקף הקטע שבחרנו בפרויקט 06" loading="lazy" width="720" height="405"></figcaption><p class="cap">מבפנים: שקף האמן ושקף ״הקטע שבחרנו״</p>
   </figure>
 </article>
 
@@ -209,7 +210,7 @@ footer{padding-top:28px; color:var(--muted); font-size:14px; max-width:70ch}
   </div>
   <figure class="shots">
     <img class="cover" src="images/07-cover.jpg" alt="שקף השער של פרויקט 07, אין לי מקום אחר" loading="lazy" width="1100" height="619">
-    <figcaption><img class="inside" src="images/07-inside.jpg" alt="שקף הקטע שבחרנו בפרויקט 07" loading="lazy" width="720" height="405"><span>מבפנים: שקף ״הקטע שבחרנו״</span></figcaption>
+    <figcaption><img class="inside" src="images/07-artist.jpg" alt="שקף האמן בפרויקט 07" loading="lazy" width="720" height="405"><img class="inside" src="images/07-inside.jpg" alt="שקף הקטע שבחרנו בפרויקט 07" loading="lazy" width="720" height="405"></figcaption><p class="cap">מבפנים: שקף האמן ושקף ״הקטע שבחרנו״</p>
   </figure>
 </article>
 
@@ -231,7 +232,7 @@ footer{padding-top:28px; color:var(--muted); font-size:14px; max-width:70ch}
   </div>
   <figure class="shots">
     <img class="cover" src="images/08-cover.jpg" alt="שקף השער של פרויקט 08, תרקוד לנצח" loading="lazy" width="1100" height="619">
-    <figcaption><img class="inside" src="images/08-inside.jpg" alt="שקף הקטע שבחרנו בפרויקט 08" loading="lazy" width="720" height="405"><span>מבפנים: שקף ״הקטע שבחרנו״</span></figcaption>
+    <figcaption><img class="inside" src="images/08-artist.jpg" alt="שקף האמן בפרויקט 08" loading="lazy" width="720" height="405"><img class="inside" src="images/08-inside.jpg" alt="שקף הקטע שבחרנו בפרויקט 08" loading="lazy" width="720" height="405"></figcaption><p class="cap">מבפנים: שקף האמן ושקף ״הקטע שבחרנו״</p>
   </figure>
 </article>
 
@@ -253,7 +254,7 @@ footer{padding-top:28px; color:var(--muted); font-size:14px; max-width:70ch}
   </div>
   <figure class="shots">
     <img class="cover" src="images/09-cover.jpg" alt="שקף השער של פרויקט 09, תחזור" loading="lazy" width="1100" height="619">
-    <figcaption><img class="inside" src="images/09-inside.jpg" alt="שקף הקטע שבחרנו בפרויקט 09" loading="lazy" width="720" height="405"><span>מבפנים: שקף ״הקטע שבחרנו״</span></figcaption>
+    <figcaption><img class="inside" src="images/09-artist.jpg" alt="שקף האמן בפרויקט 09" loading="lazy" width="720" height="405"><img class="inside" src="images/09-inside.jpg" alt="שקף הקטע שבחרנו בפרויקט 09" loading="lazy" width="720" height="405"></figcaption><p class="cap">מבפנים: שקף האמן ושקף ״הקטע שבחרנו״</p>
   </figure>
 </article>
 
@@ -275,7 +276,7 @@ footer{padding-top:28px; color:var(--muted); font-size:14px; max-width:70ch}
   </div>
   <figure class="shots">
     <img class="cover" src="images/10-cover.jpg" alt="שקף השער של פרויקט 10, חלמתי שאתה פה" loading="lazy" width="1100" height="619">
-    <figcaption><img class="inside" src="images/10-inside.jpg" alt="שקף הקטע שבחרנו בפרויקט 10" loading="lazy" width="720" height="405"><span>מבפנים: שקף ״הקטע שבחרנו״</span></figcaption>
+    <figcaption><img class="inside" src="images/10-artist.jpg" alt="שקף האמן בפרויקט 10" loading="lazy" width="720" height="405"><img class="inside" src="images/10-inside.jpg" alt="שקף הקטע שבחרנו בפרויקט 10" loading="lazy" width="720" height="405"></figcaption><p class="cap">מבפנים: שקף האמן ושקף ״הקטע שבחרנו״</p>
   </figure>
 </article>
 <footer>לאחר הבחירה השמות יוכנסו לשקף השער. את מילות השיר המלאות מדביקים בשקף 4, לפי חלוקת הבתים המקורית. כל התמונות בפרויקטים הן ברישיון חופשי, עם קרדיט לצלם.</footer>
