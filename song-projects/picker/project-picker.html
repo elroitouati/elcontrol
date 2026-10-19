@@ -8,15 +8,15 @@
 :root{
   --bg:#F2F3F5; --surface:#FFFFFF; --ink:#14161B; --muted:#5B6170; --line:#D8DBE1;
   --accent:#1D4FBF; --on-accent:#FFFFFF; --band:#0F1218; --band-ink:#F3F4F6; --band-muted:#A6ACB8;
-  --free:#1C7A4C; --taken:#B4462D;
+  --free:#1C7A4C; --taken:#B4462D; --stripe:rgba(110,114,124,.16);
   --display:"Frank Ruhl Libre", "David Libre", Georgia, serif;
   --body:"Assistant", "Heebo", Arial, sans-serif;
 }
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
   --bg:#101318; --surface:#181B22; --ink:#ECEEF2; --muted:#A2A8B5; --line:#2A2F39; --accent:#86A8FF; --on-accent:#0D1220;
-  --band:#07090C; --free:#5CC596; --taken:#F08A70; color-scheme:dark}}
+  --band:#07090C; --free:#5CC596; --taken:#F08A70; --stripe:rgba(205,209,219,.12); color-scheme:dark}}
 :root[data-theme="dark"]{--bg:#101318; --surface:#181B22; --ink:#ECEEF2; --muted:#A2A8B5; --line:#2A2F39; --accent:#86A8FF; --on-accent:#0D1220;
-  --band:#07090C; --free:#5CC596; --taken:#F08A70; color-scheme:dark}
+  --band:#07090C; --free:#5CC596; --taken:#F08A70; --stripe:rgba(205,209,219,.12); color-scheme:dark}
 html{direction:rtl; scroll-behavior:smooth}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto} *{transition:none!important}}
 body{background:var(--bg); color:var(--ink); font-family:var(--body); font-size:17px; line-height:1.55}
@@ -32,7 +32,12 @@ h1{margin:0; font-family:var(--display); font-weight:800; font-size:clamp(40px,7
 .tile img{display:block; width:100%; height:auto; aspect-ratio:16/9; object-fit:cover; transition:transform .25s ease, filter .25s ease}
 .tile:hover img{transform:scale(1.04)}
 .tile:focus-visible{outline:3px solid var(--band-ink)}
-.tile.is-taken img{filter:grayscale(1) brightness(.55)}
+.tile.is-taken::after, .proj.is-taken .frame::after{content:""; position:absolute; inset:0; pointer-events:none;
+  background:repeating-linear-gradient(135deg, var(--stripe) 0 2px, transparent 2px 13px)}
+.frame{position:relative}
+.tsold{position:absolute; top:6px; left:8px; z-index:1; font-size:12px; font-weight:700; background:var(--taken); color:#fff; padding:1px 8px; border-radius:3px}
+.section-title{margin:34px 0 0; display:flex; align-items:baseline; gap:12px; font-family:var(--display); font-weight:800; font-size:clamp(26px,3.4vw,34px)}
+.section-title small{font-family:var(--body); font-weight:600; font-size:16px; color:var(--muted)}
 .tnum{position:absolute; bottom:6px; left:8px; font-weight:700; font-size:13px; background:rgba(0,0,0,.55); padding:1px 7px; border-radius:3px; font-variant-numeric:tabular-nums}
 .sr{position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0)}
 .tname{position:absolute; bottom:6px; right:8px; left:8px; font-size:13px; font-weight:600; text-shadow:0 1px 6px rgba(0,0,0,.8); white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
@@ -65,7 +70,7 @@ dd{margin:0}
 .copy:hover{filter:brightness(1.08)}
 .note{font-size:14px; color:var(--muted)}
 .takenmsg{margin:0; color:var(--taken); font-weight:600}
-.proj.is-taken .big{filter:grayscale(.6)}
+
 footer{padding-top:26px; color:var(--muted); font-size:14px; max-width:70ch}
 @media (max-width:900px){.mosaic{grid-template-columns:repeat(2,minmax(0,1fr))} .proj{grid-template-columns:minmax(0,1fr); gap:18px}}
 </style>
@@ -73,56 +78,21 @@ footer{padding-top:26px; color:var(--muted); font-size:14px; max-width:70ch}
   <div class="inner">
     <p class="kicker">הערכה חלופית בספרות · שכבה ט׳</p>
     <h1>בוחרים פרויקט</h1>
-    <p class="lead">עשרה פרויקטים מוכנים. כל אחד עוסק בשיר אחר מתקופת המלחמה, ובנוי בעיצוב אחר לגמרי. <span class="count">6 מתוך 10 פנויים.</span></p>
-    <nav class="mosaic" aria-label="כל הפרויקטים"><a class="tile is-taken" href="#p01"><img src="images/01-cover.jpg" alt="" width="1100" height="619" loading="lazy"><span class="tnum">01</span><span class="sr">מולדת</span></a><a class="tile is-taken" href="#p02"><img src="images/02-cover.jpg" alt="" width="1100" height="619" loading="lazy"><span class="tnum">02</span><span class="sr">זריחה שחורה</span></a><a class="tile" href="#p03"><img src="images/03-cover.jpg" alt="" width="1100" height="619" loading="lazy"><span class="tnum">03</span><span class="sr">חלל</span></a><a class="tile" href="#p04"><img src="images/04-cover.jpg" alt="" width="1100" height="619" loading="lazy"><span class="tnum">04</span><span class="sr">בשדה מאחורי ביתי</span></a><a class="tile" href="#p05"><img src="images/05-cover.jpg" alt="" width="1100" height="619" loading="lazy"><span class="tnum">05</span><span class="sr">פורחים לשובם</span></a><a class="tile" href="#p06"><img src="images/06-cover.jpg" alt="" width="1100" height="619" loading="lazy"><span class="tnum">06</span><span class="sr">ילדה קטנה כותבת מכתב</span></a><a class="tile" href="#p07"><img src="images/07-cover.jpg" alt="" width="1100" height="619" loading="lazy"><span class="tnum">07</span><span class="sr">אין לי מקום אחר</span></a><a class="tile is-taken" href="#p08"><img src="images/08-cover.jpg" alt="" width="1100" height="619" loading="lazy"><span class="tnum">08</span><span class="sr">תרקוד לנצח</span></a><a class="tile is-taken" href="#p09"><img src="images/09-cover.jpg" alt="" width="1100" height="619" loading="lazy"><span class="tnum">09</span><span class="sr">תחזור</span></a><a class="tile" href="#p10"><img src="images/10-cover.jpg" alt="" width="1100" height="619" loading="lazy"><span class="tnum">10</span><span class="sr">חלמתי שאתה פה</span></a></nav>
+    <p class="lead">עשרה פרויקטים מוכנים. כל אחד עוסק בשיר אחר מתקופת המלחמה, ובנוי בעיצוב אחר לגמרי. <span class="count">6 עבודות פנויות · 4 נמכרו.</span></p>
+    <nav class="mosaic" aria-label="כל הפרויקטים"><a class="tile is-taken" href="#p01"><img src="images/01-cover.jpg" alt="" width="1100" height="619" loading="lazy"><span class="tnum">01</span><span class="tsold">נמכרה</span><span class="sr">מולדת</span></a><a class="tile is-taken" href="#p02"><img src="images/02-cover.jpg" alt="" width="1100" height="619" loading="lazy"><span class="tnum">02</span><span class="tsold">נמכרה</span><span class="sr">זריחה שחורה</span></a><a class="tile" href="#p03"><img src="images/03-cover.jpg" alt="" width="1100" height="619" loading="lazy"><span class="tnum">03</span><span class="sr">חלל</span></a><a class="tile" href="#p04"><img src="images/04-cover.jpg" alt="" width="1100" height="619" loading="lazy"><span class="tnum">04</span><span class="sr">בשדה מאחורי ביתי</span></a><a class="tile" href="#p05"><img src="images/05-cover.jpg" alt="" width="1100" height="619" loading="lazy"><span class="tnum">05</span><span class="sr">פורחים לשובם</span></a><a class="tile" href="#p06"><img src="images/06-cover.jpg" alt="" width="1100" height="619" loading="lazy"><span class="tnum">06</span><span class="sr">ילדה קטנה כותבת מכתב</span></a><a class="tile" href="#p07"><img src="images/07-cover.jpg" alt="" width="1100" height="619" loading="lazy"><span class="tnum">07</span><span class="sr">אין לי מקום אחר</span></a><a class="tile is-taken" href="#p08"><img src="images/08-cover.jpg" alt="" width="1100" height="619" loading="lazy"><span class="tnum">08</span><span class="tsold">נמכרה</span><span class="sr">תרקוד לנצח</span></a><a class="tile is-taken" href="#p09"><img src="images/09-cover.jpg" alt="" width="1100" height="619" loading="lazy"><span class="tnum">09</span><span class="tsold">נמכרה</span><span class="sr">תחזור</span></a><a class="tile" href="#p10"><img src="images/10-cover.jpg" alt="" width="1100" height="619" loading="lazy"><span class="tnum">10</span><span class="sr">חלמתי שאתה פה</span></a></nav>
     <ol class="steps"><li><b>1</b>לוחצים על פרויקט ומדפדפים בשקפים</li><li><b>2</b>בוחרים אחד</li><li><b>3</b>שולחים לאלרואי את מספר הפרויקט ואת השמות</li></ol>
   </div>
 </section>
 <main><div class="inner">
+<h2 class="section-title">עבודות פנויות <small>6</small></h2>
 
-<article class="proj is-taken" id="p01">
-  <div class="viewer">
-    <img class="big" src="images/01-cover.jpg" alt="שקף השער בפרויקט 01" width="1100" height="619" loading="lazy">
-    <div class="tabs" role="tablist" aria-label="שקפים מפרויקט 01"><button type="button" class="tab" role="tab" aria-selected="true" data-src="images/01-cover.jpg" data-alt="שקף שער בפרויקט 01">שער</button><button type="button" class="tab" role="tab" aria-selected="false" data-src="images/01-artist.jpg" data-alt="שקף האמן בפרויקט 01">האמן</button><button type="button" class="tab" role="tab" aria-selected="false" data-src="images/01-inside.jpg" data-alt="שקף הקטע שבחרנו בפרויקט 01">הקטע שבחרנו</button><button type="button" class="tab" role="tab" aria-selected="false" data-src="images/01-concept.jpg" data-alt="שקף ניתוח מושג בפרויקט 01">ניתוח מושג</button></div>
-  </div>
-  <div class="meta">
-    <div class="top"><span class="code">01</span><span class="chip taken">נבחר · שילה בן דוד</span></div>
-    <h2>מולדת</h2>
-    <p class="artist">חנן בן ארי</p>
-    <p class="about">שיר אהבה למדינה שנפצעה. יצא ב-16 באוקטובר 2023.</p>
-    <blockquote>הנביאים חזו לך אחרת<br>מישהו נרדם במשמרת</blockquote>
-    <dl>
-      <div><dt>עיצוב</dt><dd>דגל: לבן וכחול, אות עברית קלאסית</dd></div>
-      <div><dt>מושגים</dt><dd>האנשה · ניגוד</dd></div>
-    </dl>
-    <div class="pick"><p class="takenmsg">הפרויקט הזה כבר נבחר.</p></div>
-  </div>
-</article>
-<article class="proj is-taken" id="p02">
-  <div class="viewer">
-    <img class="big" src="images/02-cover.jpg" alt="שקף השער בפרויקט 02" width="1100" height="619" loading="lazy">
-    <div class="tabs" role="tablist" aria-label="שקפים מפרויקט 02"><button type="button" class="tab" role="tab" aria-selected="true" data-src="images/02-cover.jpg" data-alt="שקף שער בפרויקט 02">שער</button><button type="button" class="tab" role="tab" aria-selected="false" data-src="images/02-artist.jpg" data-alt="שקף האמן בפרויקט 02">האמן</button><button type="button" class="tab" role="tab" aria-selected="false" data-src="images/02-inside.jpg" data-alt="שקף הקטע שבחרנו בפרויקט 02">הקטע שבחרנו</button><button type="button" class="tab" role="tab" aria-selected="false" data-src="images/02-concept.jpg" data-alt="שקף ניתוח מושג בפרויקט 02">ניתוח מושג</button></div>
-  </div>
-  <div class="meta">
-    <div class="top"><span class="code">02</span><span class="chip taken">נבחר · ליאור קאפח</span></div>
-    <h2>זריחה שחורה</h2>
-    <p class="artist">אביב גפן ומיה לימברג</p>
-    <p class="about">שיר על בוקר שלא נגמר. יצא ב-20 בדצמבר 2023.</p>
-    <blockquote>ילדים שקמו לבוקר<br>כבר לא ישחקו בחצר</blockquote>
-    <dl>
-      <div><dt>עיצוב</dt><dd>שחור עם אופק בוער</dd></div>
-      <div><dt>מושגים</dt><dd>צירוף סותר · חזרה</dd></div>
-    </dl>
-    <div class="pick"><p class="takenmsg">הפרויקט הזה כבר נבחר.</p></div>
-  </div>
-</article>
 <article class="proj" id="p03">
   <div class="viewer">
-    <img class="big" src="images/03-cover.jpg" alt="שקף השער בפרויקט 03" width="1100" height="619" loading="lazy">
+    <div class="frame"><img class="big" src="images/03-cover.jpg" alt="שקף השער בפרויקט 03" width="1100" height="619" loading="lazy"></div>
     <div class="tabs" role="tablist" aria-label="שקפים מפרויקט 03"><button type="button" class="tab" role="tab" aria-selected="true" data-src="images/03-cover.jpg" data-alt="שקף שער בפרויקט 03">שער</button><button type="button" class="tab" role="tab" aria-selected="false" data-src="images/03-artist.jpg" data-alt="שקף האמן בפרויקט 03">האמן</button><button type="button" class="tab" role="tab" aria-selected="false" data-src="images/03-inside.jpg" data-alt="שקף הקטע שבחרנו בפרויקט 03">הקטע שבחרנו</button><button type="button" class="tab" role="tab" aria-selected="false" data-src="images/03-concept.jpg" data-alt="שקף ניתוח מושג בפרויקט 03">ניתוח מושג</button></div>
   </div>
   <div class="meta">
-    <div class="top"><span class="code">03</span><span class="chip free">פנוי</span></div>
+    <div class="top"><span class="code">03</span><span class="chip free">פנויה</span></div>
     <h2>חלל</h2>
     <p class="artist">אביתר בנאי</p>
     <p class="about">מילה אחת, שתי משמעויות. יצא ב-12 בספטמבר 2024.</p>
@@ -136,11 +106,11 @@ footer{padding-top:26px; color:var(--muted); font-size:14px; max-width:70ch}
 </article>
 <article class="proj" id="p04">
   <div class="viewer">
-    <img class="big" src="images/04-cover.jpg" alt="שקף השער בפרויקט 04" width="1100" height="619" loading="lazy">
+    <div class="frame"><img class="big" src="images/04-cover.jpg" alt="שקף השער בפרויקט 04" width="1100" height="619" loading="lazy"></div>
     <div class="tabs" role="tablist" aria-label="שקפים מפרויקט 04"><button type="button" class="tab" role="tab" aria-selected="true" data-src="images/04-cover.jpg" data-alt="שקף שער בפרויקט 04">שער</button><button type="button" class="tab" role="tab" aria-selected="false" data-src="images/04-artist.jpg" data-alt="שקף האמן בפרויקט 04">האמן</button><button type="button" class="tab" role="tab" aria-selected="false" data-src="images/04-inside.jpg" data-alt="שקף הקטע שבחרנו בפרויקט 04">הקטע שבחרנו</button><button type="button" class="tab" role="tab" aria-selected="false" data-src="images/04-concept.jpg" data-alt="שקף ניתוח מושג בפרויקט 04">ניתוח מושג</button></div>
   </div>
   <div class="meta">
-    <div class="top"><span class="code">04</span><span class="chip free">פנוי</span></div>
+    <div class="top"><span class="code">04</span><span class="chip free">פנויה</span></div>
     <h2>בשדה מאחורי ביתי</h2>
     <p class="artist">קרן פלס</p>
     <p class="about">שיר על השקט שאחרי הסערה. יצא ב-7 באוקטובר 2024.</p>
@@ -154,11 +124,11 @@ footer{padding-top:26px; color:var(--muted); font-size:14px; max-width:70ch}
 </article>
 <article class="proj" id="p05">
   <div class="viewer">
-    <img class="big" src="images/05-cover.jpg" alt="שקף השער בפרויקט 05" width="1100" height="619" loading="lazy">
+    <div class="frame"><img class="big" src="images/05-cover.jpg" alt="שקף השער בפרויקט 05" width="1100" height="619" loading="lazy"></div>
     <div class="tabs" role="tablist" aria-label="שקפים מפרויקט 05"><button type="button" class="tab" role="tab" aria-selected="true" data-src="images/05-cover.jpg" data-alt="שקף שער בפרויקט 05">שער</button><button type="button" class="tab" role="tab" aria-selected="false" data-src="images/05-artist.jpg" data-alt="שקף האמן בפרויקט 05">האמן</button><button type="button" class="tab" role="tab" aria-selected="false" data-src="images/05-inside.jpg" data-alt="שקף הקטע שבחרנו בפרויקט 05">הקטע שבחרנו</button><button type="button" class="tab" role="tab" aria-selected="false" data-src="images/05-concept.jpg" data-alt="שקף ניתוח מושג בפרויקט 05">ניתוח מושג</button></div>
   </div>
   <div class="meta">
-    <div class="top"><span class="code">05</span><span class="chip free">פנוי</span></div>
+    <div class="top"><span class="code">05</span><span class="chip free">פנויה</span></div>
     <h2>פורחים לשובם</h2>
     <p class="artist">ישי ריבו</p>
     <p class="about">שיר על דמעות שהופכות לפרחים. יצא ב-11 במרץ 2024.</p>
@@ -172,11 +142,11 @@ footer{padding-top:26px; color:var(--muted); font-size:14px; max-width:70ch}
 </article>
 <article class="proj" id="p06">
   <div class="viewer">
-    <img class="big" src="images/06-cover.jpg" alt="שקף השער בפרויקט 06" width="1100" height="619" loading="lazy">
+    <div class="frame"><img class="big" src="images/06-cover.jpg" alt="שקף השער בפרויקט 06" width="1100" height="619" loading="lazy"></div>
     <div class="tabs" role="tablist" aria-label="שקפים מפרויקט 06"><button type="button" class="tab" role="tab" aria-selected="true" data-src="images/06-cover.jpg" data-alt="שקף שער בפרויקט 06">שער</button><button type="button" class="tab" role="tab" aria-selected="false" data-src="images/06-artist.jpg" data-alt="שקף האמן בפרויקט 06">האמן</button><button type="button" class="tab" role="tab" aria-selected="false" data-src="images/06-inside.jpg" data-alt="שקף הקטע שבחרנו בפרויקט 06">הקטע שבחרנו</button><button type="button" class="tab" role="tab" aria-selected="false" data-src="images/06-concept.jpg" data-alt="שקף ניתוח מושג בפרויקט 06">ניתוח מושג</button></div>
   </div>
   <div class="meta">
-    <div class="top"><span class="code">06</span><span class="chip free">פנוי</span></div>
+    <div class="top"><span class="code">06</span><span class="chip free">פנויה</span></div>
     <h2>ילדה קטנה כותבת מכתב</h2>
     <p class="artist">אמיר דדון</p>
     <p class="about">מכתב לאלוהים מתוך המלחמה. יצא ב-3 ביוני 2024.</p>
@@ -190,11 +160,11 @@ footer{padding-top:26px; color:var(--muted); font-size:14px; max-width:70ch}
 </article>
 <article class="proj" id="p07">
   <div class="viewer">
-    <img class="big" src="images/07-cover.jpg" alt="שקף השער בפרויקט 07" width="1100" height="619" loading="lazy">
+    <div class="frame"><img class="big" src="images/07-cover.jpg" alt="שקף השער בפרויקט 07" width="1100" height="619" loading="lazy"></div>
     <div class="tabs" role="tablist" aria-label="שקפים מפרויקט 07"><button type="button" class="tab" role="tab" aria-selected="true" data-src="images/07-cover.jpg" data-alt="שקף שער בפרויקט 07">שער</button><button type="button" class="tab" role="tab" aria-selected="false" data-src="images/07-artist.jpg" data-alt="שקף האמן בפרויקט 07">האמן</button><button type="button" class="tab" role="tab" aria-selected="false" data-src="images/07-inside.jpg" data-alt="שקף הקטע שבחרנו בפרויקט 07">הקטע שבחרנו</button><button type="button" class="tab" role="tab" aria-selected="false" data-src="images/07-concept.jpg" data-alt="שקף ניתוח מושג בפרויקט 07">ניתוח מושג</button></div>
   </div>
   <div class="meta">
-    <div class="top"><span class="code">07</span><span class="chip free">פנוי</span></div>
+    <div class="top"><span class="code">07</span><span class="chip free">פנויה</span></div>
     <h2>אין לי מקום אחר</h2>
     <p class="artist">איתי לוי</p>
     <p class="about">שיר על חרדה ועל בית. יצא ב-27 בנובמבר 2023.</p>
@@ -206,49 +176,13 @@ footer{padding-top:26px; color:var(--muted); font-size:14px; max-width:70ch}
     <div class="pick"><button type="button" class="copy" data-msg="בחרנו בפרויקט 07: ״אין לי מקום אחר״ של איתי לוי. השמות שלנו: " data-note="note07">העתקת הודעת בחירה</button><span class="note" id="note07" role="status"></span></div>
   </div>
 </article>
-<article class="proj is-taken" id="p08">
-  <div class="viewer">
-    <img class="big" src="images/08-cover.jpg" alt="שקף השער בפרויקט 08" width="1100" height="619" loading="lazy">
-    <div class="tabs" role="tablist" aria-label="שקפים מפרויקט 08"><button type="button" class="tab" role="tab" aria-selected="true" data-src="images/08-cover.jpg" data-alt="שקף שער בפרויקט 08">שער</button><button type="button" class="tab" role="tab" aria-selected="false" data-src="images/08-artist.jpg" data-alt="שקף האמן בפרויקט 08">האמן</button><button type="button" class="tab" role="tab" aria-selected="false" data-src="images/08-inside.jpg" data-alt="שקף הקטע שבחרנו בפרויקט 08">הקטע שבחרנו</button><button type="button" class="tab" role="tab" aria-selected="false" data-src="images/08-concept.jpg" data-alt="שקף ניתוח מושג בפרויקט 08">ניתוח מושג</button></div>
-  </div>
-  <div class="meta">
-    <div class="top"><span class="code">08</span><span class="chip taken">נבחר · נועם אבגי ורב אחא</span></div>
-    <h2>תרקוד לנצח</h2>
-    <p class="artist">עומר אדם ואינפקטד מאשרום</p>
-    <p class="about">לזכר נרצחי מסיבת הנובה. יצא ב-26 באוקטובר 2023.</p>
-    <blockquote>עכשיו נשאר לי רק<br>שקט</blockquote>
-    <dl>
-      <div><dt>עיצוב</dt><dd>שחר במדבר, אינדיגו</dd></div>
-      <div><dt>מושגים</dt><dd>ניגוד · מטאפורה</dd></div>
-    </dl>
-    <div class="pick"><p class="takenmsg">הפרויקט הזה כבר נבחר.</p></div>
-  </div>
-</article>
-<article class="proj is-taken" id="p09">
-  <div class="viewer">
-    <img class="big" src="images/09-cover.jpg" alt="שקף השער בפרויקט 09" width="1100" height="619" loading="lazy">
-    <div class="tabs" role="tablist" aria-label="שקפים מפרויקט 09"><button type="button" class="tab" role="tab" aria-selected="true" data-src="images/09-cover.jpg" data-alt="שקף שער בפרויקט 09">שער</button><button type="button" class="tab" role="tab" aria-selected="false" data-src="images/09-artist.jpg" data-alt="שקף האמן בפרויקט 09">האמן</button><button type="button" class="tab" role="tab" aria-selected="false" data-src="images/09-inside.jpg" data-alt="שקף הקטע שבחרנו בפרויקט 09">הקטע שבחרנו</button><button type="button" class="tab" role="tab" aria-selected="false" data-src="images/09-concept.jpg" data-alt="שקף ניתוח מושג בפרויקט 09">ניתוח מושג</button></div>
-  </div>
-  <div class="meta">
-    <div class="top"><span class="code">09</span><span class="chip taken">נבחר · דניאל גב ואורי חודש</span></div>
-    <h2>תחזור</h2>
-    <p class="artist">הפרויקט של עידן רייכל ורוני דלומי</p>
-    <p class="about">שיר לחטופים ולמי שמחכה להם. יצא ב-31 באוקטובר 2023.</p>
-    <blockquote>תחזור, תחזור היום<br>כל כך רציתי שתגיע</blockquote>
-    <dl>
-      <div><dt>עיצוב</dt><dd>מגדלור: קרן אור בחושך</dd></div>
-      <div><dt>מושגים</dt><dd>מטאפורה · דימוי</dd></div>
-    </dl>
-    <div class="pick"><p class="takenmsg">הפרויקט הזה כבר נבחר.</p></div>
-  </div>
-</article>
 <article class="proj" id="p10">
   <div class="viewer">
-    <img class="big" src="images/10-cover.jpg" alt="שקף השער בפרויקט 10" width="1100" height="619" loading="lazy">
+    <div class="frame"><img class="big" src="images/10-cover.jpg" alt="שקף השער בפרויקט 10" width="1100" height="619" loading="lazy"></div>
     <div class="tabs" role="tablist" aria-label="שקפים מפרויקט 10"><button type="button" class="tab" role="tab" aria-selected="true" data-src="images/10-cover.jpg" data-alt="שקף שער בפרויקט 10">שער</button><button type="button" class="tab" role="tab" aria-selected="false" data-src="images/10-artist.jpg" data-alt="שקף האמן בפרויקט 10">האמן</button><button type="button" class="tab" role="tab" aria-selected="false" data-src="images/10-inside.jpg" data-alt="שקף הקטע שבחרנו בפרויקט 10">הקטע שבחרנו</button><button type="button" class="tab" role="tab" aria-selected="false" data-src="images/10-concept.jpg" data-alt="שקף ניתוח מושג בפרויקט 10">ניתוח מושג</button></div>
   </div>
   <div class="meta">
-    <div class="top"><span class="code">10</span><span class="chip free">פנוי</span></div>
+    <div class="top"><span class="code">10</span><span class="chip free">פנויה</span></div>
     <h2>חלמתי שאתה פה</h2>
     <p class="artist">ג׳יין בורדו</p>
     <p class="about">שיר אהבה שנכתב באמצע מלחמה. יצא ב-12 במרץ 2026.</p>
@@ -258,6 +192,80 @@ footer{padding-top:26px; color:var(--muted); font-size:14px; max-width:70ch}
       <div><dt>מושגים</dt><dd>מטאפורה · שאלה רטורית</dd></div>
     </dl>
     <div class="pick"><button type="button" class="copy" data-msg="בחרנו בפרויקט 10: ״חלמתי שאתה פה״ של ג׳יין בורדו. השמות שלנו: " data-note="note10">העתקת הודעת בחירה</button><span class="note" id="note10" role="status"></span></div>
+  </div>
+</article>
+<h2 class="section-title">עבודות שנמכרו <small>4</small></h2>
+
+<article class="proj is-taken" id="p01">
+  <div class="viewer">
+    <div class="frame"><img class="big" src="images/01-cover.jpg" alt="שקף השער בפרויקט 01" width="1100" height="619" loading="lazy"></div>
+    <div class="tabs" role="tablist" aria-label="שקפים מפרויקט 01"><button type="button" class="tab" role="tab" aria-selected="true" data-src="images/01-cover.jpg" data-alt="שקף שער בפרויקט 01">שער</button><button type="button" class="tab" role="tab" aria-selected="false" data-src="images/01-artist.jpg" data-alt="שקף האמן בפרויקט 01">האמן</button><button type="button" class="tab" role="tab" aria-selected="false" data-src="images/01-inside.jpg" data-alt="שקף הקטע שבחרנו בפרויקט 01">הקטע שבחרנו</button><button type="button" class="tab" role="tab" aria-selected="false" data-src="images/01-concept.jpg" data-alt="שקף ניתוח מושג בפרויקט 01">ניתוח מושג</button></div>
+  </div>
+  <div class="meta">
+    <div class="top"><span class="code">01</span><span class="chip taken">נמכרה</span></div>
+    <h2>מולדת</h2>
+    <p class="artist">חנן בן ארי</p>
+    <p class="about">שיר אהבה למדינה שנפצעה. יצא ב-16 באוקטובר 2023.</p>
+    <blockquote>הנביאים חזו לך אחרת<br>מישהו נרדם במשמרת</blockquote>
+    <dl>
+      <div><dt>עיצוב</dt><dd>דגל: לבן וכחול, אות עברית קלאסית</dd></div>
+      <div><dt>מושגים</dt><dd>האנשה · ניגוד</dd></div>
+    </dl>
+    <div class="pick"><p class="takenmsg">העבודה הזאת כבר נמכרה.</p></div>
+  </div>
+</article>
+<article class="proj is-taken" id="p02">
+  <div class="viewer">
+    <div class="frame"><img class="big" src="images/02-cover.jpg" alt="שקף השער בפרויקט 02" width="1100" height="619" loading="lazy"></div>
+    <div class="tabs" role="tablist" aria-label="שקפים מפרויקט 02"><button type="button" class="tab" role="tab" aria-selected="true" data-src="images/02-cover.jpg" data-alt="שקף שער בפרויקט 02">שער</button><button type="button" class="tab" role="tab" aria-selected="false" data-src="images/02-artist.jpg" data-alt="שקף האמן בפרויקט 02">האמן</button><button type="button" class="tab" role="tab" aria-selected="false" data-src="images/02-inside.jpg" data-alt="שקף הקטע שבחרנו בפרויקט 02">הקטע שבחרנו</button><button type="button" class="tab" role="tab" aria-selected="false" data-src="images/02-concept.jpg" data-alt="שקף ניתוח מושג בפרויקט 02">ניתוח מושג</button></div>
+  </div>
+  <div class="meta">
+    <div class="top"><span class="code">02</span><span class="chip taken">נמכרה</span></div>
+    <h2>זריחה שחורה</h2>
+    <p class="artist">אביב גפן ומיה לימברג</p>
+    <p class="about">שיר על בוקר שלא נגמר. יצא ב-20 בדצמבר 2023.</p>
+    <blockquote>ילדים שקמו לבוקר<br>כבר לא ישחקו בחצר</blockquote>
+    <dl>
+      <div><dt>עיצוב</dt><dd>שחור עם אופק בוער</dd></div>
+      <div><dt>מושגים</dt><dd>צירוף סותר · חזרה</dd></div>
+    </dl>
+    <div class="pick"><p class="takenmsg">העבודה הזאת כבר נמכרה.</p></div>
+  </div>
+</article>
+<article class="proj is-taken" id="p08">
+  <div class="viewer">
+    <div class="frame"><img class="big" src="images/08-cover.jpg" alt="שקף השער בפרויקט 08" width="1100" height="619" loading="lazy"></div>
+    <div class="tabs" role="tablist" aria-label="שקפים מפרויקט 08"><button type="button" class="tab" role="tab" aria-selected="true" data-src="images/08-cover.jpg" data-alt="שקף שער בפרויקט 08">שער</button><button type="button" class="tab" role="tab" aria-selected="false" data-src="images/08-artist.jpg" data-alt="שקף האמן בפרויקט 08">האמן</button><button type="button" class="tab" role="tab" aria-selected="false" data-src="images/08-inside.jpg" data-alt="שקף הקטע שבחרנו בפרויקט 08">הקטע שבחרנו</button><button type="button" class="tab" role="tab" aria-selected="false" data-src="images/08-concept.jpg" data-alt="שקף ניתוח מושג בפרויקט 08">ניתוח מושג</button></div>
+  </div>
+  <div class="meta">
+    <div class="top"><span class="code">08</span><span class="chip taken">נמכרה</span></div>
+    <h2>תרקוד לנצח</h2>
+    <p class="artist">עומר אדם ואינפקטד מאשרום</p>
+    <p class="about">לזכר נרצחי מסיבת הנובה. יצא ב-26 באוקטובר 2023.</p>
+    <blockquote>עכשיו נשאר לי רק<br>שקט</blockquote>
+    <dl>
+      <div><dt>עיצוב</dt><dd>שחר במדבר, אינדיגו</dd></div>
+      <div><dt>מושגים</dt><dd>ניגוד · מטאפורה</dd></div>
+    </dl>
+    <div class="pick"><p class="takenmsg">העבודה הזאת כבר נמכרה.</p></div>
+  </div>
+</article>
+<article class="proj is-taken" id="p09">
+  <div class="viewer">
+    <div class="frame"><img class="big" src="images/09-cover.jpg" alt="שקף השער בפרויקט 09" width="1100" height="619" loading="lazy"></div>
+    <div class="tabs" role="tablist" aria-label="שקפים מפרויקט 09"><button type="button" class="tab" role="tab" aria-selected="true" data-src="images/09-cover.jpg" data-alt="שקף שער בפרויקט 09">שער</button><button type="button" class="tab" role="tab" aria-selected="false" data-src="images/09-artist.jpg" data-alt="שקף האמן בפרויקט 09">האמן</button><button type="button" class="tab" role="tab" aria-selected="false" data-src="images/09-inside.jpg" data-alt="שקף הקטע שבחרנו בפרויקט 09">הקטע שבחרנו</button><button type="button" class="tab" role="tab" aria-selected="false" data-src="images/09-concept.jpg" data-alt="שקף ניתוח מושג בפרויקט 09">ניתוח מושג</button></div>
+  </div>
+  <div class="meta">
+    <div class="top"><span class="code">09</span><span class="chip taken">נמכרה</span></div>
+    <h2>תחזור</h2>
+    <p class="artist">הפרויקט של עידן רייכל ורוני דלומי</p>
+    <p class="about">שיר לחטופים ולמי שמחכה להם. יצא ב-31 באוקטובר 2023.</p>
+    <blockquote>תחזור, תחזור היום<br>כל כך רציתי שתגיע</blockquote>
+    <dl>
+      <div><dt>עיצוב</dt><dd>מגדלור: קרן אור בחושך</dd></div>
+      <div><dt>מושגים</dt><dd>מטאפורה · דימוי</dd></div>
+    </dl>
+    <div class="pick"><p class="takenmsg">העבודה הזאת כבר נמכרה.</p></div>
   </div>
 </article>
 <footer>בכל פרויקט תשעה שקפים לפי המחוון: הקטע שבחרנו, האמן, מילות השיר, שני מושגים, מילים מהמלחמה, האירועים וסיכום. השמות נכנסים לשער אחרי הבחירה. כל התמונות ברישיון חופשי, עם קרדיט לצלם.</footer>

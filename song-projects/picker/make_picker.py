@@ -25,19 +25,19 @@ def release(s, n):
 def project(i, s):
     n = f"{i:02d}"
     taken = TAKEN.get(n)
-    status = f'<span class="chip taken">נבחר · {e(taken)}</span>' if taken else '<span class="chip free">פנוי</span>'
+    status = '<span class="chip taken">נמכרה</span>' if taken else '<span class="chip free">פנויה</span>'
     tabs = "".join(
         f'<button type="button" class="tab" role="tab" aria-selected="{"true" if k == 0 else "false"}" data-src="images/{n}-{t}.jpg" data-alt="שקף {lab} בפרויקט {n}">{lab}</button>'
         for k, (t, lab) in enumerate(TABS))
     msg = f"בחרנו בפרויקט {n}: ״{s['title']}״ של {s['artist_short']}. השמות שלנו: "
     ex = "<br>".join(e(l) for l in s["excerpt"][:2])
-    btn = ('<p class="takenmsg">הפרויקט הזה כבר נבחר.</p>' if taken else
+    btn = ('<p class="takenmsg">העבודה הזאת כבר נמכרה.</p>' if taken else
            f'<button type="button" class="copy" data-msg="{e(msg)}" data-note="note{n}">העתקת הודעת בחירה</button>'
            f'<span class="note" id="note{n}" role="status"></span>')
     return f'''
 <article class="proj{' is-taken' if taken else ''}" id="p{n}">
   <div class="viewer">
-    <img class="big" src="images/{n}-cover.jpg" alt="שקף השער בפרויקט {n}" width="1100" height="619" loading="lazy">
+    <div class="frame"><img class="big" src="images/{n}-cover.jpg" alt="שקף השער בפרויקט {n}" width="1100" height="619" loading="lazy"></div>
     <div class="tabs" role="tablist" aria-label="שקפים מפרויקט {n}">{tabs}</div>
   </div>
   <div class="meta">
@@ -58,7 +58,8 @@ def project(i, s):
 def build(out_dir):
     mosaic = "".join(
         f'<a class="tile{" is-taken" if TAKEN.get(f"{i:02d}") else ""}" href="#p{i:02d}"><img src="images/{i:02d}-cover.jpg" alt="" width="1100" height="619" loading="lazy">'
-        f'<span class="tnum">{i:02d}</span><span class="sr">{e(s["title"])}</span></a>' for i, s in enumerate(SONGS, 1))
+        f'<span class="tnum">{i:02d}</span>{"<span class=\"tsold\">נמכרה</span>" if TAKEN.get(f"{i:02d}") else ""}'
+        f'<span class="sr">{e(s["title"])}</span></a>' for i, s in enumerate(SONGS, 1))
     free = len(SONGS) - len(TAKEN)
     page = f'''<title>בחירת פרויקט בספרות</title>
 <meta name="claude:viewport-fit-sides" content="cover">
@@ -70,15 +71,15 @@ def build(out_dir):
 :root{{
   --bg:#F2F3F5; --surface:#FFFFFF; --ink:#14161B; --muted:#5B6170; --line:#D8DBE1;
   --accent:#1D4FBF; --on-accent:#FFFFFF; --band:#0F1218; --band-ink:#F3F4F6; --band-muted:#A6ACB8;
-  --free:#1C7A4C; --taken:#B4462D;
+  --free:#1C7A4C; --taken:#B4462D; --stripe:rgba(110,114,124,.16);
   --display:"Frank Ruhl Libre", "David Libre", Georgia, serif;
   --body:"Assistant", "Heebo", Arial, sans-serif;
 }}
 @media (prefers-color-scheme: dark){{:root:not([data-theme="light"]){{
   --bg:#101318; --surface:#181B22; --ink:#ECEEF2; --muted:#A2A8B5; --line:#2A2F39; --accent:#86A8FF; --on-accent:#0D1220;
-  --band:#07090C; --free:#5CC596; --taken:#F08A70; color-scheme:dark}}}}
+  --band:#07090C; --free:#5CC596; --taken:#F08A70; --stripe:rgba(205,209,219,.12); color-scheme:dark}}}}
 :root[data-theme="dark"]{{--bg:#101318; --surface:#181B22; --ink:#ECEEF2; --muted:#A2A8B5; --line:#2A2F39; --accent:#86A8FF; --on-accent:#0D1220;
-  --band:#07090C; --free:#5CC596; --taken:#F08A70; color-scheme:dark}}
+  --band:#07090C; --free:#5CC596; --taken:#F08A70; --stripe:rgba(205,209,219,.12); color-scheme:dark}}
 html{{direction:rtl; scroll-behavior:smooth}}
 @media (prefers-reduced-motion:reduce){{html{{scroll-behavior:auto}} *{{transition:none!important}}}}
 body{{background:var(--bg); color:var(--ink); font-family:var(--body); font-size:17px; line-height:1.55}}
@@ -94,7 +95,12 @@ h1{{margin:0; font-family:var(--display); font-weight:800; font-size:clamp(40px,
 .tile img{{display:block; width:100%; height:auto; aspect-ratio:16/9; object-fit:cover; transition:transform .25s ease, filter .25s ease}}
 .tile:hover img{{transform:scale(1.04)}}
 .tile:focus-visible{{outline:3px solid var(--band-ink)}}
-.tile.is-taken img{{filter:grayscale(1) brightness(.55)}}
+.tile.is-taken::after, .proj.is-taken .frame::after{{content:""; position:absolute; inset:0; pointer-events:none;
+  background:repeating-linear-gradient(135deg, var(--stripe) 0 2px, transparent 2px 13px)}}
+.frame{{position:relative}}
+.tsold{{position:absolute; top:6px; left:8px; z-index:1; font-size:12px; font-weight:700; background:var(--taken); color:#fff; padding:1px 8px; border-radius:3px}}
+.section-title{{margin:34px 0 0; display:flex; align-items:baseline; gap:12px; font-family:var(--display); font-weight:800; font-size:clamp(26px,3.4vw,34px)}}
+.section-title small{{font-family:var(--body); font-weight:600; font-size:16px; color:var(--muted)}}
 .tnum{{position:absolute; bottom:6px; left:8px; font-weight:700; font-size:13px; background:rgba(0,0,0,.55); padding:1px 7px; border-radius:3px; font-variant-numeric:tabular-nums}}
 .sr{{position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0)}}
 .tname{{position:absolute; bottom:6px; right:8px; left:8px; font-size:13px; font-weight:600; text-shadow:0 1px 6px rgba(0,0,0,.8); white-space:nowrap; overflow:hidden; text-overflow:ellipsis}}
@@ -127,7 +133,7 @@ dd{{margin:0}}
 .copy:hover{{filter:brightness(1.08)}}
 .note{{font-size:14px; color:var(--muted)}}
 .takenmsg{{margin:0; color:var(--taken); font-weight:600}}
-.proj.is-taken .big{{filter:grayscale(.6)}}
+
 footer{{padding-top:26px; color:var(--muted); font-size:14px; max-width:70ch}}
 @media (max-width:900px){{.mosaic{{grid-template-columns:repeat(2,minmax(0,1fr))}} .proj{{grid-template-columns:minmax(0,1fr); gap:18px}}}}
 </style>
@@ -135,13 +141,16 @@ footer{{padding-top:26px; color:var(--muted); font-size:14px; max-width:70ch}}
   <div class="inner">
     <p class="kicker">הערכה חלופית בספרות · שכבה ט׳</p>
     <h1>בוחרים פרויקט</h1>
-    <p class="lead">עשרה פרויקטים מוכנים. כל אחד עוסק בשיר אחר מתקופת המלחמה, ובנוי בעיצוב אחר לגמרי. <span class="count">{free} מתוך {len(SONGS)} פנויים.</span></p>
+    <p class="lead">עשרה פרויקטים מוכנים. כל אחד עוסק בשיר אחר מתקופת המלחמה, ובנוי בעיצוב אחר לגמרי. <span class="count">{free} עבודות פנויות · {len(SONGS) - free} נמכרו.</span></p>
     <nav class="mosaic" aria-label="כל הפרויקטים">{mosaic}</nav>
     <ol class="steps"><li><b>1</b>לוחצים על פרויקט ומדפדפים בשקפים</li><li><b>2</b>בוחרים אחד</li><li><b>3</b>שולחים לאלרואי את מספר הפרויקט ואת השמות</li></ol>
   </div>
 </section>
 <main><div class="inner">
-{"".join(project(i, s) for i, s in enumerate(SONGS, 1))}
+<h2 class="section-title">עבודות פנויות <small>{free}</small></h2>
+{"".join(project(i, s) for i, s in enumerate(SONGS, 1) if not TAKEN.get(f"{i:02d}"))}
+<h2 class="section-title">עבודות שנמכרו <small>{len(SONGS) - free}</small></h2>
+{"".join(project(i, s) for i, s in enumerate(SONGS, 1) if TAKEN.get(f"{i:02d}"))}
 <footer>בכל פרויקט תשעה שקפים לפי המחוון: הקטע שבחרנו, האמן, מילות השיר, שני מושגים, מילים מהמלחמה, האירועים וסיכום. השמות נכנסים לשער אחרי הבחירה. כל התמונות ברישיון חופשי, עם קרדיט לצלם.</footer>
 </div></main>
 <script>
