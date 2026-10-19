@@ -4,6 +4,7 @@ import os, sys, subprocess, glob
 from PIL import Image
 from songs import SONGS, STYLES
 from layouts import Builder
+from names import NAMES
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 SK = "/root/.claude/skills/synced/08c638a7-ddb8-46c5-be86-9b61f06d3064_3c3b1d69-4ee7-425a-92f6-908dec8fa724/pptx"
@@ -38,6 +39,7 @@ if __name__ == "__main__":
         folder = os.path.join(HERE, song["id"])
         os.makedirs(folder, exist_ok=True)
         out = os.path.join(folder, song["id"] + ".pptx")
+        song = dict(song, names=NAMES.get(song["id"][:2]))
         Builder(song, STYLES[song["style"]]).build(out)
         r = subprocess.run(["python3", f"{SK}/scripts/office/validate.py", out], capture_output=True, text=True)
         print(song["id"], "|", r.stdout.strip().splitlines()[-1] if r.stdout.strip() else r.stderr[-300:])

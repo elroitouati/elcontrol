@@ -5,7 +5,7 @@ import sys, os, re, html
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
 from songs import SONGS
 
-TAKEN = {}  # למשל: {"03": "דנה כהן ויואב לוי"}
+from names import NAMES as TAKEN
 
 STYLE = {"flag": "דגל: לבן וכחול, אות עברית קלאסית", "sunrise": "שחור עם אופק בוער", "space": "מינימליסטי, הרבה מקום ריק",
          "field": "שדה ירוק עם כלניות", "bloom": "ירוק לילה וכלנית אדומה", "notebook": "דף מחברת וכתב יד",

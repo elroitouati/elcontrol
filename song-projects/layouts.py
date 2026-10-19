@@ -87,7 +87,8 @@ class Builder:
         s, st, K = self.s, self.st, self.K
         v = st["v"]["cover"]
         size = st.get("cover_size", 120)
-        names = self.P(self.R("שמות המגישים", 20, K.MUTED, "body"))
+        who = s.get("names")
+        names = self.P(self.R(who, 22, K.TEXT, "strong") if who else self.R("שמות המגישים", 20, K.MUTED, "body"))
         label = "הערכה חלופית בספרות · שכבה ט׳"
         if v == "center":
             sl = self.new(0.0, stripes=st.get("stripes_on_cover", False))
@@ -124,11 +125,11 @@ class Builder:
             self.credit(sl, M, 5.5, 6, s["cover_credit"])
             K.text(sl, 6.0, 5.7, W - M - 6.0, 0.7, [self.P(self.R(s["artist"], 32, K.ACC, "light"))])
             K.text(sl, M, 6.35, W - 2 * M, 0.5, [self.P(self.R(s["tagline"], 20, K.MUTED, "body"))])
-            K.text(sl, M, 5.75, 5.0, 0.5, [self.P(self.R("שמות המגישים", 20, K.MUTED, "body"), align="l")])
+            K.text(sl, M, 5.75, 5.0, 0.5, [self.P(self.R(s.get("names") or "שמות המגישים", 20, K.TEXT if s.get("names") else K.MUTED, "strong" if s.get("names") else "body"), align="l")])
         elif v == "poster":
             sl = self.new(0.0)
             K.text(sl, M, 0.6, 7.5, 0.5, [self.P(self.R(label, 18, K.TEXT, "label"))], name="Label")
-            K.text(sl, M, 0.6, 5.0, 0.5, [self.P(self.R("שמות המגישים", 18, K.MUTED, "body"), align="l")])
+            K.text(sl, M, 0.6, 5.0, 0.5, [self.P(self.R(s.get("names") or "שמות המגישים", 20, K.TEXT if s.get("names") else K.MUTED, "strong" if s.get("names") else "body"), align="l")])
             K.text(sl, M, 1.3, W - 2 * M, 0.8, [self.P(self.R(s["artist"], 34, K.ACC, "light"))])
             K.text(sl, M - 0.1, 2.0, W - 2 * M + 0.2, 4.6, [self.P(self.R(s["title"], size, K.TEXT, "display", bold=st.get("display_bold", False)), line=0.8)],
                    anchor="b", name="Title")
