@@ -95,7 +95,7 @@ h1{{margin:0; font-family:var(--display); font-weight:800; font-size:clamp(40px,
 .tile:hover img{{transform:scale(1.04)}}
 .tile:focus-visible{{outline:3px solid var(--band-ink)}}
 .tile.is-taken img{{filter:grayscale(1) brightness(.55)}}
-.tnum{{position:absolute; top:6px; right:8px; font-weight:700; font-size:13px; background:rgba(0,0,0,.55); padding:1px 7px; border-radius:3px; font-variant-numeric:tabular-nums}}
+.tnum{{position:absolute; bottom:6px; left:8px; font-weight:700; font-size:13px; background:rgba(0,0,0,.55); padding:1px 7px; border-radius:3px; font-variant-numeric:tabular-nums}}
 .sr{{position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0)}}
 .tname{{position:absolute; bottom:6px; right:8px; left:8px; font-size:13px; font-weight:600; text-shadow:0 1px 6px rgba(0,0,0,.8); white-space:nowrap; overflow:hidden; text-overflow:ellipsis}}
 .steps{{margin:0; padding:0; list-style:none; display:flex; flex-wrap:wrap; gap:8px 26px; color:var(--band-ink)}}
@@ -166,7 +166,32 @@ document.querySelectorAll(".copy").forEach(function(btn){{
 </script>
 '''
     open(os.path.join(out_dir, "project-picker.html"), "w", encoding="utf-8").write(page)
+    return page
+
+
+SITE = "https://elroitouati.github.io/elcontrol/"
+
+
+def standalone(page, out_dir):
+    """גרסה עצמאית לאתר (GitHub Pages) עם תצוגה מקדימה לוואטסאפ."""
+    head = ('<!doctype html><html lang="he" dir="rtl"><head><meta charset="utf-8">'
+            '<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">'
+            '<meta name="description" content="עשרה פרויקטים מוכנים להערכה חלופית בספרות, שכבה ט׳. מדפדפים, בוחרים ושולחים.">'
+            '<meta property="og:type" content="website"><meta property="og:locale" content="he_IL">'
+            '<meta property="og:title" content="בוחרים פרויקט · הערכה חלופית בספרות">'
+            '<meta property="og:description" content="עשרה שירים, עשרה עיצובים. בוחרים אחד ושולחים לאלרואי.">'
+            f'<meta property="og:image" content="{SITE}og.jpg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">'
+            f'<meta property="og:url" content="{SITE}"><meta name="twitter:card" content="summary_large_image">'
+            '<style>*,*::before,*::after{box-sizing:border-box}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}'
+            'body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>')
+    i = page.index("</title>") + len("</title>")
+    out = head + page[:i] + page[i:].replace("<style>", "<style>", 1)
+    out = out.replace('<meta name="claude:viewport-fit-sides" content="cover">', "")
+    out = out.replace("<section class=\"band\">", "</head><body><section class=\"band\">", 1) + "</body></html>"
+    open(os.path.join(out_dir, "index.html"), "w", encoding="utf-8").write(out)
 
 
 if __name__ == "__main__":
-    build(sys.argv[1])
+    p = build(sys.argv[1])
+    if len(sys.argv) > 2:
+        standalone(p, sys.argv[2])
