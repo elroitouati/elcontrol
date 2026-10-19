@@ -1,0 +1,294 @@
+<title>בחירת פרויקט בספרות</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@500;700&family=Assistant:wght@400;600&display=swap">
+<style>
+/* Layout: a single reading column of numbered project rows; text on the right, slides on the left, stacking on phones */
+:root{
+  --bg:#F3F4F6; --surface:#FFFFFF; --ink:#16181D; --muted:#5D6270; --line:#D9DCE2; --accent:#1F4FB8; --accent-ink:#FFFFFF;
+  --display:"Frank Ruhl Libre", "David Libre", Georgia, serif;
+  --body:"Assistant", "Heebo", Arial, sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#111318; --surface:#1A1D24; --ink:#ECEEF2; --muted:#A3A8B4; --line:#2C313B; --accent:#7EA2FF; --accent-ink:#0E1220; color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#111318; --surface:#1A1D24; --ink:#ECEEF2; --muted:#A3A8B4; --line:#2C313B; --accent:#7EA2FF; --accent-ink:#0E1220; color-scheme:dark}
+html{direction:rtl}
+body{background:var(--bg); color:var(--ink); font-family:var(--body); font-size:17px; line-height:1.55}
+.wrap{max-width:1120px; margin:0 auto; padding-left:max(16px, env(safe-area-inset-left, 0px)); padding-right:max(16px, env(safe-area-inset-right, 0px)); padding-block:40px 64px}
+header{display:grid; gap:14px; padding-bottom:28px; border-bottom:1px solid var(--line)}
+.kicker{margin:0; color:var(--accent); font-weight:600; letter-spacing:.02em}
+h1{margin:0; font-family:var(--display); font-weight:700; font-size:clamp(34px,6vw,58px); line-height:1.05; text-wrap:balance}
+.lead{margin:0; max-width:62ch; color:var(--muted)}
+ol.steps{margin:6px 0 0; padding:0; list-style:none; display:flex; flex-wrap:wrap; gap:10px 28px}
+ol.steps li{display:flex; gap:8px; align-items:baseline}
+ol.steps b{font-family:var(--display); color:var(--accent); font-size:20px}
+.proj{display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1.35fr); gap:32px; padding-block:36px; border-bottom:1px solid var(--line); scroll-margin-top:16px}
+.meta{display:flex; flex-direction:column; gap:6px; min-width:0}
+.code{margin:0; font-size:14px; letter-spacing:.06em; color:var(--muted); font-variant-numeric:tabular-nums}
+h2{margin:0; font-family:var(--display); font-weight:700; font-size:clamp(28px,4vw,40px); line-height:1.1; text-wrap:balance}
+.artist{margin:0; font-weight:600; color:var(--accent)}
+.about{margin:4px 0 6px; color:var(--ink)}
+dl{margin:6px 0 0; display:grid; gap:8px}
+dl div{display:grid; grid-template-columns:88px minmax(0,1fr); gap:10px; padding-top:8px; border-top:1px dashed var(--line)}
+dt{color:var(--muted); font-size:14px; padding-top:2px}
+dd{margin:0}
+dd.ex{font-family:var(--display); font-size:18px}
+.pick{margin-top:14px; display:flex; flex-wrap:wrap; align-items:center; gap:12px}
+.copy{font:inherit; font-weight:600; border:0; border-radius:6px; padding:10px 16px; background:var(--accent); color:var(--accent-ink); cursor:pointer}
+.copy:hover{filter:brightness(1.08)}
+.copy:focus-visible{outline:3px solid var(--ink); outline-offset:2px}
+.note{font-size:14px; color:var(--muted)}
+.shots{margin:0; display:grid; gap:10px; min-width:0}
+.cover{width:100%; height:auto; aspect-ratio:16/9; object-fit:cover; display:block; border:1px solid var(--line); box-shadow:0 10px 30px -18px rgba(0,0,0,.45)}
+figcaption{display:flex; align-items:center; gap:12px; color:var(--muted); font-size:14px}
+.inside{width:42%; max-width:100%; height:auto; aspect-ratio:16/9; display:block; border:1px solid var(--line)}
+footer{padding-top:28px; color:var(--muted); font-size:14px; max-width:70ch}
+@media (max-width:820px){.proj{grid-template-columns:minmax(0,1fr); gap:18px}.shots{order:-1}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+<div class="wrap">
+<header>
+  <p class="kicker">הערכה חלופית בספרות · שכבה ט׳</p>
+  <h1>בוחרים פרויקט</h1>
+  <p class="lead">עשרה פרויקטים מוכנים, כל אחד על שיר אחר מתקופת המלחמה ובעיצוב אחר. בכל פרויקט יש תשעה שקפים לפי המחוון: הקטע שבחרנו, האמן, מילות השיר, שני מושגים, מילים מהמלחמה, האירועים וסיכום.</p>
+  <ol class="steps">
+    <li><b>1</b> עוברים על הפרויקטים</li>
+    <li><b>2</b> בוחרים אחד</li>
+    <li><b>3</b> שולחים לאלרואי את מספר הפרויקט ואת שמות המגישים</li>
+  </ol>
+</header>
+
+<article class="proj" id="p01">
+  <div class="meta">
+    <p class="code">פרויקט 01</p>
+    <h2>מולדת</h2>
+    <p class="artist">חנן בן ארי</p>
+    <p class="about">שיר אהבה למדינה שנפצעה. יצא ב-16 באוקטובר 2023.</p>
+    <dl>
+      <div><dt>עיצוב</dt><dd>דגל: לבן וכחול, אות עברית קלאסית</dd></div>
+      <div><dt>מושגים</dt><dd>האנשה · ניגוד</dd></div>
+      <div><dt>מתוך הקטע</dt><dd class="ex">הנביאים חזו לך אחרת<br>מישהו נרדם במשמרת</dd></div>
+    </dl>
+    <div class="pick">
+      <button type="button" class="copy" data-msg="בחרנו בפרויקט 01: ״מולדת״ של חנן בן ארי. השמות שלנו: " aria-describedby="note01">העתקת הודעת בחירה</button>
+      <span class="note" id="note01" role="status"></span>
+    </div>
+  </div>
+  <figure class="shots">
+    <img class="cover" src="images/01-cover.jpg" alt="שקף השער של פרויקט 01, מולדת" loading="lazy" width="1100" height="619">
+    <figcaption><img class="inside" src="images/01-inside.jpg" alt="שקף הקטע שבחרנו בפרויקט 01" loading="lazy" width="720" height="405"><span>מבפנים: שקף ״הקטע שבחרנו״</span></figcaption>
+  </figure>
+</article>
+
+<article class="proj" id="p02">
+  <div class="meta">
+    <p class="code">פרויקט 02</p>
+    <h2>זריחה שחורה</h2>
+    <p class="artist">אביב גפן ומיה לימברג</p>
+    <p class="about">שיר על בוקר שלא נגמר. יצא ב-20 בדצמבר 2023.</p>
+    <dl>
+      <div><dt>עיצוב</dt><dd>שחור עם אופק בוער</dd></div>
+      <div><dt>מושגים</dt><dd>צירוף סותר · חזרה</dd></div>
+      <div><dt>מתוך הקטע</dt><dd class="ex">ילדים שקמו לבוקר<br>כבר לא ישחקו בחצר</dd></div>
+    </dl>
+    <div class="pick">
+      <button type="button" class="copy" data-msg="בחרנו בפרויקט 02: ״זריחה שחורה״ של אביב גפן. השמות שלנו: " aria-describedby="note02">העתקת הודעת בחירה</button>
+      <span class="note" id="note02" role="status"></span>
+    </div>
+  </div>
+  <figure class="shots">
+    <img class="cover" src="images/02-cover.jpg" alt="שקף השער של פרויקט 02, זריחה שחורה" loading="lazy" width="1100" height="619">
+    <figcaption><img class="inside" src="images/02-inside.jpg" alt="שקף הקטע שבחרנו בפרויקט 02" loading="lazy" width="720" height="405"><span>מבפנים: שקף ״הקטע שבחרנו״</span></figcaption>
+  </figure>
+</article>
+
+<article class="proj" id="p03">
+  <div class="meta">
+    <p class="code">פרויקט 03</p>
+    <h2>חלל</h2>
+    <p class="artist">אביתר בנאי</p>
+    <p class="about">מילה אחת, שתי משמעויות. יצא ב-12 בספטמבר 2024.</p>
+    <dl>
+      <div><dt>עיצוב</dt><dd>מינימליסטי, הרבה מקום ריק</dd></div>
+      <div><dt>מושגים</dt><dd>כפל משמעות · משחק מילים</dd></div>
+      <div><dt>מתוך הקטע</dt><dd class="ex">השדה הבוער הלב הזועק<br>שליחים של האל שהפעם שותק</dd></div>
+    </dl>
+    <div class="pick">
+      <button type="button" class="copy" data-msg="בחרנו בפרויקט 03: ״חלל״ של אביתר בנאי. השמות שלנו: " aria-describedby="note03">העתקת הודעת בחירה</button>
+      <span class="note" id="note03" role="status"></span>
+    </div>
+  </div>
+  <figure class="shots">
+    <img class="cover" src="images/03-cover.jpg" alt="שקף השער של פרויקט 03, חלל" loading="lazy" width="1100" height="619">
+    <figcaption><img class="inside" src="images/03-inside.jpg" alt="שקף הקטע שבחרנו בפרויקט 03" loading="lazy" width="720" height="405"><span>מבפנים: שקף ״הקטע שבחרנו״</span></figcaption>
+  </figure>
+</article>
+
+<article class="proj" id="p04">
+  <div class="meta">
+    <p class="code">פרויקט 04</p>
+    <h2>בשדה מאחורי ביתי</h2>
+    <p class="artist">קרן פלס</p>
+    <p class="about">שיר על השקט שאחרי הסערה. יצא ב-7 באוקטובר 2024.</p>
+    <dl>
+      <div><dt>עיצוב</dt><dd>שדה ירוק עם כלניות</dd></div>
+      <div><dt>מושגים</dt><dd>מטאפורה · האנשה</dd></div>
+      <div><dt>מתוך הקטע</dt><dd class="ex">בשדה מאחורי ביתי כבר התפזר עשן<br>צמח מטפס על הגשרים שנשרפו מזמן</dd></div>
+    </dl>
+    <div class="pick">
+      <button type="button" class="copy" data-msg="בחרנו בפרויקט 04: ״בשדה מאחורי ביתי״ של קרן פלס. השמות שלנו: " aria-describedby="note04">העתקת הודעת בחירה</button>
+      <span class="note" id="note04" role="status"></span>
+    </div>
+  </div>
+  <figure class="shots">
+    <img class="cover" src="images/04-cover.jpg" alt="שקף השער של פרויקט 04, בשדה מאחורי ביתי" loading="lazy" width="1100" height="619">
+    <figcaption><img class="inside" src="images/04-inside.jpg" alt="שקף הקטע שבחרנו בפרויקט 04" loading="lazy" width="720" height="405"><span>מבפנים: שקף ״הקטע שבחרנו״</span></figcaption>
+  </figure>
+</article>
+
+<article class="proj" id="p05">
+  <div class="meta">
+    <p class="code">פרויקט 05</p>
+    <h2>פורחים לשובם</h2>
+    <p class="artist">ישי ריבו</p>
+    <p class="about">שיר על דמעות שהופכות לפרחים. יצא ב-11 במרץ 2024.</p>
+    <dl>
+      <div><dt>עיצוב</dt><dd>ירוק לילה וכלנית אדומה</dd></div>
+      <div><dt>מושגים</dt><dd>מטאפורה · שיבוץ</dd></div>
+      <div><dt>מתוך הקטע</dt><dd class="ex">כל הדמעות<br>הכאב שבקעו מהלב</dd></div>
+    </dl>
+    <div class="pick">
+      <button type="button" class="copy" data-msg="בחרנו בפרויקט 05: ״פורחים לשובם״ של ישי ריבו. השמות שלנו: " aria-describedby="note05">העתקת הודעת בחירה</button>
+      <span class="note" id="note05" role="status"></span>
+    </div>
+  </div>
+  <figure class="shots">
+    <img class="cover" src="images/05-cover.jpg" alt="שקף השער של פרויקט 05, פורחים לשובם" loading="lazy" width="1100" height="619">
+    <figcaption><img class="inside" src="images/05-inside.jpg" alt="שקף הקטע שבחרנו בפרויקט 05" loading="lazy" width="720" height="405"><span>מבפנים: שקף ״הקטע שבחרנו״</span></figcaption>
+  </figure>
+</article>
+
+<article class="proj" id="p06">
+  <div class="meta">
+    <p class="code">פרויקט 06</p>
+    <h2>ילדה קטנה כותבת מכתב</h2>
+    <p class="artist">אמיר דדון</p>
+    <p class="about">מכתב לאלוהים מתוך המלחמה. יצא ב-3 ביוני 2024.</p>
+    <dl>
+      <div><dt>עיצוב</dt><dd>דף מחברת וכתב יד</dd></div>
+      <div><dt>מושגים</dt><dd>מטאפורה · שאלה רטורית</dd></div>
+      <div><dt>מתוך הקטע</dt><dd class="ex">העיניים כבר ריקות מדמעות<br>התייבשנו כבר מרוב מלחמות</dd></div>
+    </dl>
+    <div class="pick">
+      <button type="button" class="copy" data-msg="בחרנו בפרויקט 06: ״ילדה קטנה כותבת מכתב״ של אמיר דדון. השמות שלנו: " aria-describedby="note06">העתקת הודעת בחירה</button>
+      <span class="note" id="note06" role="status"></span>
+    </div>
+  </div>
+  <figure class="shots">
+    <img class="cover" src="images/06-cover.jpg" alt="שקף השער של פרויקט 06, ילדה קטנה כותבת מכתב" loading="lazy" width="1100" height="619">
+    <figcaption><img class="inside" src="images/06-inside.jpg" alt="שקף הקטע שבחרנו בפרויקט 06" loading="lazy" width="720" height="405"><span>מבפנים: שקף ״הקטע שבחרנו״</span></figcaption>
+  </figure>
+</article>
+
+<article class="proj" id="p07">
+  <div class="meta">
+    <p class="code">פרויקט 07</p>
+    <h2>אין לי מקום אחר</h2>
+    <p class="artist">איתי לוי</p>
+    <p class="about">שיר על חרדה ועל בית. יצא ב-27 בנובמבר 2023.</p>
+    <dl>
+      <div><dt>עיצוב</dt><dd>פוסטר בטון וצהוב</dd></div>
+      <div><dt>מושגים</dt><dd>מטאפורה · ניגוד</dd></div>
+      <div><dt>מתוך הקטע</dt><dd class="ex">צעקתי תציל אותי אני מקולקל<br>דמיונות שורטים ואני נבהל</dd></div>
+    </dl>
+    <div class="pick">
+      <button type="button" class="copy" data-msg="בחרנו בפרויקט 07: ״אין לי מקום אחר״ של איתי לוי. השמות שלנו: " aria-describedby="note07">העתקת הודעת בחירה</button>
+      <span class="note" id="note07" role="status"></span>
+    </div>
+  </div>
+  <figure class="shots">
+    <img class="cover" src="images/07-cover.jpg" alt="שקף השער של פרויקט 07, אין לי מקום אחר" loading="lazy" width="1100" height="619">
+    <figcaption><img class="inside" src="images/07-inside.jpg" alt="שקף הקטע שבחרנו בפרויקט 07" loading="lazy" width="720" height="405"><span>מבפנים: שקף ״הקטע שבחרנו״</span></figcaption>
+  </figure>
+</article>
+
+<article class="proj" id="p08">
+  <div class="meta">
+    <p class="code">פרויקט 08</p>
+    <h2>תרקוד לנצח</h2>
+    <p class="artist">עומר אדם ואינפקטד מאשרום</p>
+    <p class="about">לזכר נרצחי מסיבת הנובה. יצא ב-26 באוקטובר 2023.</p>
+    <dl>
+      <div><dt>עיצוב</dt><dd>שחר במדבר, אינדיגו</dd></div>
+      <div><dt>מושגים</dt><dd>ניגוד · מטאפורה</dd></div>
+      <div><dt>מתוך הקטע</dt><dd class="ex">עכשיו נשאר לי רק<br>שקט</dd></div>
+    </dl>
+    <div class="pick">
+      <button type="button" class="copy" data-msg="בחרנו בפרויקט 08: ״תרקוד לנצח״ של עומר אדם. השמות שלנו: " aria-describedby="note08">העתקת הודעת בחירה</button>
+      <span class="note" id="note08" role="status"></span>
+    </div>
+  </div>
+  <figure class="shots">
+    <img class="cover" src="images/08-cover.jpg" alt="שקף השער של פרויקט 08, תרקוד לנצח" loading="lazy" width="1100" height="619">
+    <figcaption><img class="inside" src="images/08-inside.jpg" alt="שקף הקטע שבחרנו בפרויקט 08" loading="lazy" width="720" height="405"><span>מבפנים: שקף ״הקטע שבחרנו״</span></figcaption>
+  </figure>
+</article>
+
+<article class="proj" id="p09">
+  <div class="meta">
+    <p class="code">פרויקט 09</p>
+    <h2>תחזור</h2>
+    <p class="artist">הפרויקט של עידן רייכל ורוני דלומי</p>
+    <p class="about">שיר לחטופים ולמי שמחכה להם. יצא ב-31 באוקטובר 2023.</p>
+    <dl>
+      <div><dt>עיצוב</dt><dd>מגדלור: קרן אור בחושך</dd></div>
+      <div><dt>מושגים</dt><dd>מטאפורה · דימוי</dd></div>
+      <div><dt>מתוך הקטע</dt><dd class="ex">תחזור, תחזור היום<br>כל כך רציתי שתגיע</dd></div>
+    </dl>
+    <div class="pick">
+      <button type="button" class="copy" data-msg="בחרנו בפרויקט 09: ״תחזור״ של הפרויקט של עידן רייכל. השמות שלנו: " aria-describedby="note09">העתקת הודעת בחירה</button>
+      <span class="note" id="note09" role="status"></span>
+    </div>
+  </div>
+  <figure class="shots">
+    <img class="cover" src="images/09-cover.jpg" alt="שקף השער של פרויקט 09, תחזור" loading="lazy" width="1100" height="619">
+    <figcaption><img class="inside" src="images/09-inside.jpg" alt="שקף הקטע שבחרנו בפרויקט 09" loading="lazy" width="720" height="405"><span>מבפנים: שקף ״הקטע שבחרנו״</span></figcaption>
+  </figure>
+</article>
+
+<article class="proj" id="p10">
+  <div class="meta">
+    <p class="code">פרויקט 10</p>
+    <h2>חלמתי שאתה פה</h2>
+    <p class="artist">ג׳יין בורדו</p>
+    <p class="about">שיר אהבה שנכתב באמצע מלחמה. יצא ב-12 במרץ 2026.</p>
+    <dl>
+      <div><dt>עיצוב</dt><dd>יומן אישי, כתב יד</dd></div>
+      <div><dt>מושגים</dt><dd>מטאפורה · שאלה רטורית</dd></div>
+      <div><dt>מתוך הקטע</dt><dd class="ex">חלמתי שאתה פה<br>לידי לוחש לי אל תדאגי</dd></div>
+    </dl>
+    <div class="pick">
+      <button type="button" class="copy" data-msg="בחרנו בפרויקט 10: ״חלמתי שאתה פה״ של ג׳יין בורדו. השמות שלנו: " aria-describedby="note10">העתקת הודעת בחירה</button>
+      <span class="note" id="note10" role="status"></span>
+    </div>
+  </div>
+  <figure class="shots">
+    <img class="cover" src="images/10-cover.jpg" alt="שקף השער של פרויקט 10, חלמתי שאתה פה" loading="lazy" width="1100" height="619">
+    <figcaption><img class="inside" src="images/10-inside.jpg" alt="שקף הקטע שבחרנו בפרויקט 10" loading="lazy" width="720" height="405"><span>מבפנים: שקף ״הקטע שבחרנו״</span></figcaption>
+  </figure>
+</article>
+<footer>לאחר הבחירה השמות יוכנסו לשקף השער. את מילות השיר המלאות מדביקים בשקף 4, לפי חלוקת הבתים המקורית. כל התמונות בפרויקטים הן ברישיון חופשי, עם קרדיט לצלם.</footer>
+</div>
+<script>
+document.querySelectorAll(".copy").forEach(function(btn){
+  btn.addEventListener("click", function(){
+    var note = document.getElementById(btn.getAttribute("aria-describedby"));
+    var msg = btn.getAttribute("data-msg");
+    function fallback(){ note.textContent = msg; var r = document.createRange(); r.selectNodeContents(note); var s = window.getSelection(); s.removeAllRanges(); s.addRange(r); }
+    try {
+      navigator.clipboard.writeText(msg).then(function(){ note.textContent = "ההודעה הועתקה. מוסיפים את השמות ושולחים לאלרואי."; }, fallback);
+    } catch(e){ fallback(); }
+  });
+});
+</script>
