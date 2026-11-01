@@ -149,7 +149,7 @@ footer{{padding-top:26px; color:var(--muted); font-size:14px; max-width:70ch}}
 </section>
 <main><div class="inner">
 <h2 class="section-title">עבודות פנויות <small>{free}</small></h2>
-{"".join(project(i, s) for i, s in enumerate(SONGS, 1) if not TAKEN.get(f"{i:02d}"))}
+{"".join(project(i, s) for i, s in enumerate(SONGS, 1) if not TAKEN.get(f"{i:02d}")) or '<p class="lead" style="color:var(--muted);margin:14px 0 0">כל העבודות נמכרו. תודה לכולם!</p>'}
 <h2 class="section-title">עבודות שנמכרו <small>{len(SONGS) - free}</small></h2>
 {"".join(project(i, s) for i, s in enumerate(SONGS, 1) if TAKEN.get(f"{i:02d}"))}
 <footer>בכל פרויקט תשעה שקפים לפי המחוון: הקטע שבחרנו, האמן, מילות השיר, שני מושגים, מילים מהמלחמה, האירועים וסיכום. השמות נכנסים לשער אחרי הבחירה. כל התמונות ברישיון חופשי, עם קרדיט לצלם.</footer>
